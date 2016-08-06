@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+
+.log_body p {/* 段落 */
+	margin:0.5em 0;
+}
+.chara_name {/* キャラネーム */
+	display:block;
+	margin-top:1em;
+}
+
+/* 縦書き用 */
+.log_body.vertical p {/* 段落 */
+	margin:0 0.5em;
+	//text-combine-upright: digits 2;
+}
+.log_body.vertical .chara_name {/* キャラネーム */
+	display:block;
+	margin-right:1em;
+	margin-top:0;
+}
