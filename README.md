@@ -11,7 +11,7 @@
 * ブースタープラグインに対応出来るよう、text関係は別ファイルに分けとく。
 
 マークアップ ルールがガチガチになっちゃう・・・。  
-[Font]～[resetfont] 内に[p]入れられない  
+[Font]～[resetfont] 内に[p]とかキャラ名とか入れられない  
   
 ダメ  
 [font  size="30"  color="0xffffff"]  
@@ -20,8 +20,8 @@
 [resetfont]  
 
 OK  
-[font  size="30"  color="0xffffff"]  
 ＃?  
+[font  size="30"  color="0xffffff"]  
 ちょっとまったーーーーー  
 [resetfont]  
 [p]
