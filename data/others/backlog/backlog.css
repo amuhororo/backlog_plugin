@@ -8,6 +8,10 @@
 	display:block;
 	margin-top:1em;
 }
+.log_body p:first-child,
+.log_body p:first-child .chara_name {/* 1行目のmarginいらない */
+	margin-top:0;
+}
 
 /* 縦書き用 */
 .log_body.vertical p {/* 段落 */
@@ -18,4 +22,8 @@
 	display:block;
 	margin-right:1em;
 	margin-top:0;
+}
+.log_body.vertical p:first-child,
+.log_body.vertical p:first-child .chara_name {/* 1行目のmarginいらない */
+	margin-right:0;
 }
