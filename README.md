@@ -15,14 +15,14 @@
   
 ダメ
 [font  size="30"  color="0xffffff"]  
-#?  
+＃?  
 ちょっとまったーーーーー[p]  
 [resetfont]  
 
 OK
 ダメ
 [font  size="30"  color="0xffffff"]  
-#?  
+＃?  
 ちょっとまったーーーーー  
 [resetfont]  
 [p]
