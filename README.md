@@ -9,3 +9,20 @@
 * [p][er][ct][cm][s]時にログを纏めて、別配列に格納。
 * 整形はCSS
 * ブースタープラグインに対応出来るよう、text関係は別ファイルに分けとく。
+
+マークアップ ルールがガチガチになっちゃう・・・。  
+[Font]～[resetfont] 内に[p]入れられない  
+  
+ダメ
+[font  size="30"  color="0xffffff"]  
+#?  
+ちょっとまったーーーーー[p]  
+[resetfont]  
+
+OK
+ダメ
+[font  size="30"  color="0xffffff"]  
+#?  
+ちょっとまったーーーーー  
+[resetfont]  
+[p]
