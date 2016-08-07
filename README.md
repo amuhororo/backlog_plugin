@@ -13,14 +13,13 @@
 マークアップ ルールがガチガチになっちゃう・・・。  
 [Font]～[resetfont] 内に[p]入れられない  
   
-ダメ
+ダメ  
 [font  size="30"  color="0xffffff"]  
 ＃?  
 ちょっとまったーーーーー[p]  
 [resetfont]  
 
-OK
-ダメ
+OK  
 [font  size="30"  color="0xffffff"]  
 ＃?  
 ちょっとまったーーーーー  
