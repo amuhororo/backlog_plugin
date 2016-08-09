@@ -44,19 +44,23 @@ font]タグ情報をログに表示する場合、タグの記載方法が限定
 * [p][cm][er][ct][s]を挟む場合は、再度[font]タグを記述しなければなりません。
   
 ・ダメな例（ログでは色指定されません）  
-```[font  size="30"  color="0xff0000"]  
+```
+[font  size="30"  color="0xff0000"]  
   ＃ゆうこ  
   ゲーム制作に  
   [p]  
   興味あるの？
-  [resetfont]``` 
+  [resetfont]
+``` 
 
 ・OKな例  
-```＃ゆうこ 
+```
+＃ゆうこ 
   [font  size="30"  color="0xff0000"]  
   ゲーム制作に  
   [resetfont]  
   [p]  
   [font  size="30"  color="0xff0000"]  
   興味あるの？ 
-  [resetfont]```
+  [resetfont]
+```
