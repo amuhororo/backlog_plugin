@@ -28,7 +28,7 @@ tyrano.plugin.kag.pushBackLogNew = function(str){
 
 
 	//新バックログ変数にpush
-	var log_conf = this.variable.tf.log_conf;
+	var log_conf = this.variable.sf.log_conf;
 	
 	if(log_str!="")this.variable.tf["backlog"].push("<p>"+log_str+"</p>");
 	if(str)this.variable.tf["backlog"].push(str);
@@ -176,7 +176,7 @@ tyrano.plugin.kag.tag.font.start = function(pm) {
 	}
 	
 	//◆設定呼び出し
-	var log_conf = this.kag.variable.tf.log_conf;
+	var log_conf = this.kag.variable.sf.log_conf;
 	if(log_conf.font_style == true){
 		var backlog = '<span style="' + style_color + style_size + style_bold + style_italic + style_face + '">';
 		this.kag.pushBackLog(backlog);
@@ -190,8 +190,13 @@ tyrano.plugin.kag.tag.font.start = function(pm) {
 tyrano.plugin.kag.tag.resetfont.start = function() {
 	
 	//◆設定呼び出し
-	var log_conf = this.kag.variable.tf.log_conf;
-	if(log_conf.font_style == true)this.kag.pushBackLog("</span>");
+	var log_conf = this.kag.variable.sf.log_conf;
+	var array_backlog = tyrano.plugin.kag.variable.tf.system.backlog;
+	var last_log = array_backlog[array_backlog.length -1];
+
+	if (array_backlog.length > 0){
+		if(log_conf.font_style == true)this.kag.pushBackLog("</span>");
+	}
 	
 	var j_span = this.kag.setMessageCurrentSpan();
 	
@@ -200,13 +205,123 @@ tyrano.plugin.kag.tag.resetfont.start = function() {
 };
 
 
+//■ptext■
+tyrano.plugin.kag.tag.ptext.start = function(pm) {
+
+	var that = this;
+
+	//◆バックログに入れる場合の処理
+	if(pm.backlog == "true"){
+		//◆設定呼び出し
+		var log_conf = this.kag.variable.sf.log_conf;
+		//pm.color = $.convertColor(pm.color);
+		var style_color = (pm.color != "") ? 'color:' + $.convertColor(pm.color) + ';' : '';
+		var style_size = (pm.size != "") ? 'font-size:' + pm.size + 'px;' : '';
+		var style_bold = (pm.bold != "") ? 'font-weight:' + pm.bold + ';' : '';
+		var style_face = (pm.face != "") ? 'font-family:' + pm.face + ';' : '';
+		var backlog = '<p class="mtext">' + pm.text + '</p>';
+		if(log_conf.font_style == true) var backlog = '<p class="ptext" style="' + style_color + style_size + style_bold + style_face + '">' + pm.text + '</p>';
+		this.kag.pushBackLogNew(backlog);
+	};
+	//◆end
+
+	//visible true が指定されている場合は表示状態に持っていけ
+	//これはレイヤのスタイル
+        
+	//指定がない場合はデフォルトフォントを適応する
+        
+	if(pm.face ==""){
+		pm.face=that.kag.stat.font.face;
+	}
+        
+	if(pm.color == ""){
+		pm.color=$.convertColor(that.kag.stat.font.color);
+	}else{
+		pm.color = $.convertColor(pm.color);
+	}
+
+	var font_new_style = {
+
+		"color" : pm.color,
+		"font-weight" : pm.bold,
+		"font-style" : pm.fontstyle,
+		"font-size" : pm.size + "px",
+		"font-family" : pm.face,
+		"z-index" : "999",
+		"text" : ""
+
+	};
+
+	var target_layer = this.kag.layer.getLayer(pm.layer, pm.page);
+
+	//上書き指定
+	if (pm.overwrite == "true" && pm.name != "") {
+		if ($("." + pm.name).size() > 0) {
+			$("." + pm.name).html(pm.text);
+			this.kag.ftag.nextOrder();
+			return false;
+		}
+	}
+
+	var tobj = $("<p></p>");
+
+	tobj.css("position", "absolute");
+	tobj.css("top", pm.y + "px");
+	tobj.css("left", pm.x + "px");
+	//tobj.css("width", "100%");
+	tobj.css("width", "auto");
+        
+	if (pm.vertical == "true") {
+		tobj.addClass("vertical_text");
+	}
+
+	//オブジェクトにクラス名をセットします
+	$.setName(tobj, pm.name);
+
+	tobj.html(pm.text);
+
+	this.kag.setStyles(tobj, font_new_style);
+        
+	if(pm.layer=="fix"){
+            tobj.addClass("fixlayer");
+	}
+        
+	//時間指定
+	if(pm.time != ""){
+		tobj.css("opacity",0);
+		target_layer.append(tobj);
+		tobj.animate(
+			{"opacity":1},
+			parseInt(pm.time), 
+			function(){
+				that.kag.ftag.nextOrder();
+			}
+		);
+	}else{
+		this.kag.ftag.nextOrder();
+		target_layer.append(tobj);
+	}
+        
+	//◆センタリング
+	if (pm.x == "center") {
+		var x = (parseInt(that.kag.config.scWidth,10) - parseInt(tobj.outerWidth(),10))*0.5;
+		tobj.css("left", x + "px");
+	}
+	if (pm.y == "center") {
+		var y = (parseInt(that.kag.config.scHeight,10) - parseInt(tobj.outerHeight(),10))*0.5;
+		tobj.css("top", y + "px");
+	}
+};
+
+
 //■mtext■
 tyrano.plugin.kag.tag.mtext.start = function(pm) {
 	var that = this;
-        
+
+	//◆バックログに入れる場合の処理
 	if(pm.backlog == "true"){
 		//◆設定呼び出し
-		var log_conf = this.kag.variable.tf.log_conf;
+		var log_conf = this.kag.variable.sf.log_conf;
 		//pm.color = $.convertColor(pm.color);
 		var style_color = (pm.color != "") ? 'color:' + $.convertColor(pm.color) + ';' : '';
 		var style_size = (pm.size != "") ? 'font-size:' + pm.size + 'px;' : '';
@@ -216,6 +331,7 @@ tyrano.plugin.kag.tag.mtext.start = function(pm) {
 		if(log_conf.font_style == true) var backlog = '<p class="mtext" style="' + style_color + style_size + style_bold + style_face + '">' + pm.text + '</p>';
 		this.kag.pushBackLogNew(backlog);
 	};
+	//◆end
 
 	//指定がない場合はデフォルトフォントを適応する
 	if(pm.face ==""){
@@ -248,7 +364,8 @@ tyrano.plugin.kag.tag.mtext.start = function(pm) {
 	tobj.css("position", "absolute");
 	tobj.css("top", pm.y + "px");
 	tobj.css("left", pm.x + "px");
-	tobj.css("width", "100%");
+	//tobj.css("width", "100%");
+	tobj.css("width", "auto");
 
 	if (pm.vertical == "true") {
 		tobj.addClass("vertical_text");
@@ -317,6 +434,105 @@ tyrano.plugin.kag.tag.mtext.start = function(pm) {
 	if(pm.wait != true){
 		this.kag.ftag.nextOrder();
 	}
+
+	//◆センタリング
+	if (pm.x == "center") {
+		var x = (parseInt(that.kag.config.scWidth,10) - parseInt(tobj.outerWidth(),10))*0.5;
+		tobj.css("left", x + "px");
+	}
+	if (pm.y == "center") {
+		var y = (parseInt(that.kag.config.scHeight,10) - parseInt(tobj.outerHeight(),10))*0.5;
+		tobj.css("top", y + "px");
+	}
+};
+
+
+//■glink■
+tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
+         
+	var that = TYRANO;
+         
+	(function() {
+
+		var _target = pm.target;
+		var _storage = pm.storage;
+		var _pm = pm;
+		var preexp = that.kag.embScript(pm.preexp);
+		var button_clicked = false;
+
+		j_button.click(function(e) {
+                
+			//クリックされた時に音が指定されていたら
+			if (_pm.clickse != "") {
+				that.kag.ftag.startTag("playse", {
+					"storage" : _pm.clickse
+				});
+			}
+
+			//◆バックログに入れる場合の処理
+			if(_pm.backlog == "true"){
+				that.kag.pushBackLogNew("<p class='glink'>" + _pm.text + "</p>");
+			}
+
+			//Sタグに到達していないとクリッカブルが有効にならない fixの時は実行される必要がある
+			if (that.kag.stat.is_strong_stop != true) {
+				return false;
+			}
+
+			button_clicked = true;
+
+			if (_pm.exp != "") {
+				//スクリプト実行
+				that.kag.embScript(_pm.exp, preexp);
+			}
+
+			that.kag.layer.showEventLayer();
+			
+			that.kag.ftag.startTag("cm", {});
+			//コールを実行する
+			that.kag.ftag.startTag("jump", _pm);
+							
+			//選択肢の後、スキップを継続するか否か
+			if(that.kag.stat.skip_link=="true"){
+				e.stopPropagation();
+			}else{
+				that.kag.stat.is_skip = false; 
+			}
+
+		});
+            
+		j_button.hover(function() {
+
+			if (_pm.enterimg != "") {
+				var enterimg_url = "./data/image/" + _pm.enterimg;
+				j_button.css("background-image", "url(" + enterimg_url + ")");
+			}
+
+			//マウスが乗った時
+			if (_pm.enterse != "") {
+				that.kag.ftag.startTag("playse", {
+					"storage" : _pm.enterse,
+					"stop" : true
+				});
+			}
+                
+		}, 
+		function() {
+
+			if (_pm.enterimg != "") {
+				var img_url = "./data/image/" + _pm.graphic;
+				j_button.css("background-image", "url(" + img_url + ")");
+			}
+			//マウスが乗った時
+			if (_pm.leavese != "") {
+				that.kag.ftag.startTag("playse", {
+					"storage" : _pm.leavese,
+					"stop" : true
+				});
+			}
+		}); 
+
+	})();
 };
 
 
@@ -328,10 +544,10 @@ tyrano.plugin.kag.tag.chara_ptext.start = function(pm) {
 	var name_color = '';
 	
 	//◆設定呼び出し
-	var log_conf = this.kag.variable.tf.log_conf;
+	var log_conf = this.kag.variable.sf.log_conf;
 	
 	if (pm.name == "") {
-		$("." + this.kag.stat.chara_ptext).html("");
+		$("." + this.kag.stat.chara_ptext).html("").hide();
 		
 		//◆名前無い時も空タグ入れる
 		this.kag.pushBackLog( '<span class="chara_name"></span>' );
@@ -353,7 +569,7 @@ tyrano.plugin.kag.tag.chara_ptext.start = function(pm) {
 		var cpm = this.kag.stat.charas[pm.name];
 		if (cpm) {
 			//キャラクター名出力
-			$("." + this.kag.stat.chara_ptext).html(cpm.jname);
+			$("." + this.kag.stat.chara_ptext).html(cpm.jname).show();
 						
 			//色指定がある場合は、その色を指定する。
 			if (cpm.color != "") {
@@ -381,7 +597,7 @@ tyrano.plugin.kag.tag.chara_ptext.start = function(pm) {
 
 		} else {
 			//存在しない場合はそのまま表示できる
-			$("." + this.kag.stat.chara_ptext).html(pm.name);
+			$("." + this.kag.stat.chara_ptext).html(pm.name).show();
 			
 			//◆キャラ名をログに保存
 			this.kag.pushBackLog( '<span class="chara_name">' + pm.name + '</span>' );
@@ -427,7 +643,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 			}
 		});
 		
-		
+		//◆ログを取得（段落化済みの分）
 		var newlog_str = "";
 		
 		var array_newlog = that.kag.variable.tf.backlog;
@@ -436,6 +652,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 			newlog_str += array_newlog[i];
 		}
 
+		//◆ログを取得（段落化前の分）
 		var log_str = newlog_str;
 		
 		var array_log = that.kag.variable.tf.system.backlog;
@@ -450,8 +667,10 @@ tyrano.plugin.kag.menu.displayLog = function () {
 		//空タグを削除
 		//$(".log_body").find("p[class!='chara_name']:empty").remove();
 		
-		//Config.tjsのデフォルト設定を追加
-		var log_conf = that.kag.variable.tf.log_conf;
+		//◆設定呼び出し
+		var log_conf = that.kag.variable.sf.log_conf;
+		
+		//◆Config.tjsのデフォルト設定を追加
 		if(log_conf.def_style == true){
 			var line_height = parseInt(that.kag.config.defaultFontSize) + parseInt(that.kag.config.defaultLineSpacing);
 			line_height = parseInt(line_height) / parseInt(that.kag.config.defaultFontSize);
@@ -466,7 +685,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 			});
 		};
 
-		//縦書きの時
+		//◆縦書きの時
 		if ( that.kag.config.vertical == "true" ){
 		
 			layer_menu.find(".log_body").addClass('vertical')
