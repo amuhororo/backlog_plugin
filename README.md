@@ -20,7 +20,7 @@ by hororo http://hororo.wp.xdomain.jp/
 ティラノスクリプト Ver423  
   
 ##使い方  
-最初にbacklog.ksファイルを読み込んでください。
+最初にbacklog.ksファイルを読み込んでください。  
 [call storage="sbacklog/backlog.ks"]  
   
 [mtext] [ptext] [glink] のtextをログに表示するには、backlog=true を追記します。  
@@ -45,7 +45,7 @@ font]タグ情報をログに表示する場合、タグの記載方法が限定
   
 ・ダメな例（ログでは色指定されません）  
 ```
-[font  size="30"  color="0xff0000"]  
+  [font  size="30"  color="0xff0000"]  
   ＃ゆうこ  
   ゲーム制作に  
   [p]  
@@ -55,7 +55,7 @@ font]タグ情報をログに表示する場合、タグの記載方法が限定
 
 ・OKな例  
 ```
-＃ゆうこ 
+  ＃ゆうこ 
   [font  size="30"  color="0xff0000"]  
   ゲーム制作に  
   [resetfont]  
@@ -64,3 +64,9 @@ font]タグ情報をログに表示する場合、タグの記載方法が限定
   興味あるの？ 
   [resetfont]
 ```
+  
+##Ver履歴  
+1.00 ： 公開  
+  
+##ご協力感謝  
+* SOroom SOrow 様
