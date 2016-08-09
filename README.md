@@ -69,4 +69,4 @@ font]タグ情報をログに表示する場合、タグの記載方法が限定
 1.00 ： 公開  
   
 ##ご協力感謝  
-* SOroom SOrow 様
+* [SOroom SOrow 様](http://north.undo.jp/ "SOroom SOrow 様")
