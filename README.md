@@ -13,6 +13,7 @@ by hororo http://hororo.wp.xdomain.jp/
 * mtext / ptext のみ、パラメータ x=center or y=center でセンタリングができます。
 * [p][er][ct][cm][s]時にログを纏めて別変数に格納する事で、段落毎の表示ができます。
 * CSSで自由に整形できます。
+* ログの縦書き対応。Config.tjs で vertical = true になっていれば自動で縦書き表示になります。
 * ブーストプラグインに対応しやすいよう、text関係は別ファイルに分けてあります。
   
 ##動作確認  
@@ -24,7 +25,7 @@ by hororo http://hororo.wp.xdomain.jp/
   
 [mtext] [ptext] [glink] のtextをログに表示するには、backlog=true を追記します。  
 例：[mtext text=テキスト backlog=true]  
-※[glink]は、選択したテキストのみログに表示されます。  
+※[glink]は、選択したボタンのテキストのみログに表示されます。  
   
 ログのHTMLタグ例  
 &lt;p&gt;テキスト&lt;/p&gt; //キャラ名なしの場合  
@@ -43,19 +44,19 @@ font]タグ情報をログに表示する場合、タグの記載方法が限定
 * [p][cm][er][ct][s]を挟む場合は、再度[font]タグを記述しなければなりません。
   
 ・ダメな例（ログでは色指定されません）  
-[font  size="30"  color="0xff0000"]  
-＃ゆうこ  
-ゲーム制作に  
-[p]  
-興味あるの？
-[resetfont]  
+  [font  size="30"  color="0xff0000"]  
+  ＃ゆうこ  
+  ゲーム制作に  
+  [p]  
+  興味あるの？
+  [resetfont]  
 
 ・OKな例  
-＃ゆうこ 
-[font  size="30"  color="0xff0000"]  
-ゲーム制作に  
-[resetfont]  
-[p]  
-[font  size="30"  color="0xff0000"]  
-興味あるの？ 
-[resetfont]
+  ＃ゆうこ 
+  [font  size="30"  color="0xff0000"]  
+  ゲーム制作に  
+  [resetfont]  
+  [p]  
+  [font  size="30"  color="0xff0000"]  
+  興味あるの？ 
+  [resetfont]
