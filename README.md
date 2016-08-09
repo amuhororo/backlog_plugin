@@ -22,16 +22,16 @@ by hororo http://hororo.wp.xdomain.jp/
 最初にbacklog.ksファイルを読み込んでください。
 [call storage="sbacklog/backlog.ks"]  
   
-[mtext] [ptext] [glink] のtextをログに表示するには、backlog=true を追記します。
-例：[mtext text=テキスト backlog=true]
+[mtext] [ptext] [glink] のtextをログに表示するには、backlog=true を追記します。  
+例：[mtext text=テキスト backlog=true]  
 ※[glink]は、選択したテキストのみログに表示されます。  
   
 ログのHTMLタグ例  
-<p>テキスト</p> //キャラ名なしの場合  
-<p><span class="chara_name">名前</span>テキスト</p> //キャラ名がある場合  
-<p class="mtext">mtext</p> //mtext  
-<p class="ptext">ptext</p> //ptext  
-<p class="glink">glink</p> //glink
+&lt;p&gt;テキスト&lt;/p&gt; //キャラ名なしの場合  
+&lt;p&gt;&lt;span class="chara_name"&gt;名前&lt;/span&gt;テキスト&lt;/p&gt; //キャラ名がある場合  
+&lt;p class="mtext"&gt;mtext&lt;/p&gt; //mtext  
+&lt;p class="ptext"&gt;ptext&lt;/p&gt; //ptext  
+&lt;p class="glink"&gt;glink&lt;/p&gt; //glink
   
 ##注意点  
 スクリプトエンジン本体を改造していますので、別Verでは動作しない可能性があります。  
