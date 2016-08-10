@@ -22,7 +22,7 @@ by hororo http://hororo.wp.xdomain.jp/
   
 ##使い方  
 最初にbacklog.ksファイルを読み込んでください。  
-[call storage="sbacklog/backlog.ks"]  
+[call storage="backlog/backlog.ks"]  
   
 ###パラメータ  
 backlog : true  
