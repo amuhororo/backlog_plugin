@@ -65,7 +65,9 @@ tyrano.plugin.kag.tag.p.start = function() {
 
 //■r■
 tyrano.plugin.kag.tag.r.start = function() {
-	this.kag.pushBackLog("<br>");
+
+	if(pm.backlog=="true")this.kag.pushBackLogNew();
+	else this.kag.pushBackLog("<br>");
 
 	//クリックするまで、次へすすまないようにする
 	var j_inner_message = this.kag.getMessageInnerLayer();
@@ -132,6 +134,7 @@ tyrano.plugin.kag.tag.s.start = function() {
 	this.kag.stat.is_strong_stop = true;
 	this.kag.layer.hideEventLayer();
 };
+
 
 //■font■
 tyrano.plugin.kag.tag.font.start = function(pm) {

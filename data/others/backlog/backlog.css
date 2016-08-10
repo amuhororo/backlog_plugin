@@ -4,17 +4,17 @@
 .log_body p {/* 段落 */
 	margin:0.5em 0;
 }
-.chara_name {/* キャラネーム */
+.log_name {/* キャラネーム */
 	display:block;
 	margin-top:1em;
 }
 .log_body p:first-child,
-.log_body p:first-child .chara_name {/* 1行目のmarginいらない */
+.log_body p:first-child .log_name {/* 1行目のmarginいらない */
 	margin-top:0;
 }
-.glink,
-.mtext,
-.ptext {
+.log_glink,
+.log_mtext,
+.log_ptext {
 	margin:1em 0;
 }
 
@@ -22,19 +22,18 @@
 /* 縦書き用 */
 .log_body.vertical p {/* 段落 */
 	margin:0 0.5em;
-	//text-combine-upright: digits 2;
 }
-.log_body.vertical .chara_name {/* キャラネーム */
+.log_body.vertical .log_name {/* キャラネーム */
 	display:block;
 	margin-right:1em;
 	margin-top:0;
 }
 .log_body.vertical p:first-child,
-.log_body.vertical p:first-child .chara_name {/* 1行目のmarginいらない */
+.log_body.vertical p:first-child .log_name {/* 1行目のmarginいらない */
 	margin-right:0;
 }
-.log_body.vertical .glink,
-.log_body.vertical .mtext,
-.log_body.vertical .ptext {
+.log_body.vertical .log_glink,
+.log_body.vertical .log_mtext,
+.log_body.vertical .log_ptext {
 	margin:0 1em;
 }
