@@ -103,10 +103,10 @@ backlog : true
   
 ##ティラノスクリプト瞬間表示プラグインとの併用方法  
 ご自身で改造をお願い致します。  
+  
 1. backlog.ks の`[loadjs storage="backlog/showMessage.js"]` 部分を削除  
-others/backlog/showMessage.js は削除してかまいません。
-2. boost_mode.js にバックログ用の記述を追記
-	* `current_str += str;` の下に `that.kag.pushBackLog(str);` ×2ヶ所
+1. boost_mode.js にバックログ用の記述を追記  
+	* `current_str += str;` の下に `that.kag.pushBackLog(str);` ×2ヶ所  
 	* `current_str += c;` の下に `that.kag.pushBackLog(c);` ×2ヶ所
-3. boost_mode.js の `$("#glyph_image").show();` を `$(".glyph_image").show();` にしておく。  
+1. boost_mode.js の `$("#glyph_image").show();` を `$(".glyph_image").show();` にしておく。  
 
