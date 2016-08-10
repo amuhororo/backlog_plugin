@@ -9,28 +9,30 @@ tyrano.plugin.kag.pushBackLog = function(str){
 
 };
 
+//◆新しいバックログ変数を設定
 tyrano.plugin.kag.pushBackLogNew = function(str){
     	
 	var that = this;
 	
-	//バックログを文字列に
+	//◆バックログを文字列に
 	var log_str = "";
 	var array_log = this.variable.tf.system.backlog;
 	log_str = array_log.join("");
 
-	
-	//バックログを削除
+	//◆バックログを削除
 	this.variable.tf.system.backlog = [];
 	
-	//新バックログの変数が無ければ定義
+	//◆新バックログの変数が無ければ定義
 	if(!this.variable.tf.backlog) this.variable.tf.backlog = [];
-	console.log(log_str);
+	//console.log(log_str);
 
-
-	//新バックログ変数にpush
-	var log_conf = this.variable.sf.log_conf;
+	//◆設定呼び出し
+	//var log_conf = this.variable.sf.log_conf;
 	
+	//◆ログあれば<p>で囲う
 	if(log_str!="")this.variable.tf["backlog"].push("<p>"+log_str+"</p>");
+	
+	//◆引数がある場合
 	if(str)this.variable.tf["backlog"].push(str);
 	
 	
@@ -43,14 +45,13 @@ tyrano.plugin.kag.pushBackLogNew = function(str){
 		this.variable.tf["backlog"].shift();
 	}
     	
-	var test = that.kag.variable.tf["backlog"];
-	console.log(test);
 };
 
 //■p■
 tyrano.plugin.kag.tag.p.start = function() {
 	var that = this;
-			
+	
+	//◆バックログの段落作成
 	this.kag.pushBackLogNew();
 	
 	this.kag.stat.flag_ref_page = true;
@@ -64,8 +65,9 @@ tyrano.plugin.kag.tag.p.start = function() {
 };
 
 //■r■
-tyrano.plugin.kag.tag.r.start = function() {
+tyrano.plugin.kag.tag.r.start = function(pm) {
 
+	//◆バックログ
 	if(pm.backlog=="true")this.kag.pushBackLogNew();
 	else this.kag.pushBackLog("<br>");
 
@@ -81,6 +83,7 @@ tyrano.plugin.kag.tag.r.start = function() {
 //■er■
 tyrano.plugin.kag.tag.er.start = function() {
 
+	//◆バックログの段落作成
 	this.kag.pushBackLogNew();
 
 	this.kag.ftag.hideNextImg();
@@ -94,6 +97,7 @@ tyrano.plugin.kag.tag.er.start = function() {
 //■ct■
 tyrano.plugin.kag.tag.ct.start = function() {
 
+	//◆バックログの段落作成
 	this.kag.pushBackLogNew();
 
 	this.kag.ftag.hideNextImg();
@@ -113,7 +117,8 @@ tyrano.plugin.kag.tag.ct.start = function() {
 
 //■cm■
 tyrano.plugin.kag.tag.cm.start = function() {
-	
+
+	//◆バックログの段落作成	
 	this.kag.pushBackLogNew();
 
 	this.kag.ftag.hideNextImg();
@@ -128,7 +133,8 @@ tyrano.plugin.kag.tag.cm.start = function() {
 
 //■s■
 tyrano.plugin.kag.tag.s.start = function() {
-	
+
+	//◆バックログの段落作成	
 	this.kag.pushBackLogNew();
 
 	this.kag.stat.is_strong_stop = true;
@@ -180,6 +186,7 @@ tyrano.plugin.kag.tag.font.start = function(pm) {
 	
 	//◆設定呼び出し
 	var log_conf = this.kag.variable.sf.log_conf;
+	//◆バックログにタグ追加
 	if(log_conf.font_style == true){
 		var backlog = '<span style="' + style_color + style_size + style_bold + style_italic + style_face + '">';
 		this.kag.pushBackLog(backlog);
@@ -194,9 +201,9 @@ tyrano.plugin.kag.tag.resetfont.start = function() {
 	
 	//◆設定呼び出し
 	var log_conf = this.kag.variable.sf.log_conf;
+	//◆バックログが空欄だったら閉じタグは入れないように
 	var array_backlog = tyrano.plugin.kag.variable.tf.system.backlog;
 	var last_log = array_backlog[array_backlog.length -1];
-
 	if (array_backlog.length > 0){
 		if(log_conf.font_style == true)this.kag.pushBackLog("</span>");
 	}
@@ -223,7 +230,7 @@ tyrano.plugin.kag.tag.ptext.start = function(pm) {
 		var style_bold = (pm.bold != "") ? 'font-weight:' + pm.bold + ';' : '';
 		var style_face = (pm.face != "") ? 'font-family:' + pm.face + ';' : '';
 		var backlog = '<p class="mtext">' + pm.text + '</p>';
-		if(log_conf.font_style == true) var backlog = '<p class="ptext" style="' + style_color + style_size + style_bold + style_face + '">' + pm.text + '</p>';
+		if(log_conf.font_style == true) var backlog = '<p class="log_ptext" style="' + style_color + style_size + style_bold + style_face + '">' + pm.text + '</p>';
 		this.kag.pushBackLogNew(backlog);
 	};
 	//◆end
@@ -331,7 +338,7 @@ tyrano.plugin.kag.tag.mtext.start = function(pm) {
 		var style_bold = (pm.bold != "") ? 'font-weight:' + pm.bold + ';' : '';
 		var style_face = (pm.face != "") ? 'font-family:' + pm.face + ';' : '';
 		var backlog = '<p class="mtext">' + pm.text + '</p>';
-		if(log_conf.font_style == true) var backlog = '<p class="mtext" style="' + style_color + style_size + style_bold + style_face + '">' + pm.text + '</p>';
+		if(log_conf.font_style == true) var backlog = '<p class="log_mtext" style="' + style_color + style_size + style_bold + style_face + '">' + pm.text + '</p>';
 		this.kag.pushBackLogNew(backlog);
 	};
 	//◆end
@@ -474,7 +481,7 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
 
 			//◆バックログに入れる場合の処理
 			if(_pm.backlog == "true"){
-				that.kag.pushBackLogNew("<p class='glink'>" + _pm.text + "</p>");
+				that.kag.pushBackLogNew("<p class='log_glink'>" + _pm.text + "</p>");
 			}
 
 			//Sタグに到達していないとクリッカブルが有効にならない fixの時は実行される必要がある
@@ -552,8 +559,8 @@ tyrano.plugin.kag.tag.chara_ptext.start = function(pm) {
 	if (pm.name == "") {
 		$("." + this.kag.stat.chara_ptext).html("").hide();
 		
-		//◆名前無い時も空タグ入れる
-		this.kag.pushBackLog( '<span class="chara_name"></span>' );
+		//◆名前が無い時も空タグを入れる
+		this.kag.pushBackLog( '<span class="log_name"></span>' );
 		
 		//全員の明度を下げる。誰も話していないから
 		//明度設定が有効な場合
@@ -596,14 +603,14 @@ tyrano.plugin.kag.tag.chara_ptext.start = function(pm) {
 			//◆キャラ名をログに保存
 			if(log_conf.font_style == true && cpm.color != "") var name_color = ' style="color:' + $.convertColor(cpm.color) +'"';
 			//else var name_color = '';
-			this.kag.pushBackLog( '<span class="chara_name"' + name_color + '>' + cpm.jname + '</span>' );
+			this.kag.pushBackLog( '<span class="log_name"' + name_color + '>' + cpm.jname + '</span>' );
 
 		} else {
 			//存在しない場合はそのまま表示できる
 			$("." + this.kag.stat.chara_ptext).html(pm.name).show();
 			
 			//◆キャラ名をログに保存
-			this.kag.pushBackLog( '<span class="chara_name">' + pm.name + '</span>' );
+			this.kag.pushBackLog( '<span class="log_name">' + pm.name + '</span>' );
 		}
 	
 	}
@@ -646,7 +653,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 			}
 		});
 		
-		//◆ログを取得（段落化済みの分）
+		//◆新ログを取得（段落分け済みの分）
 		var newlog_str = "";
 		
 		var array_newlog = that.kag.variable.tf.backlog;
@@ -655,7 +662,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 			newlog_str += array_newlog[i];
 		}
 
-		//◆ログを取得（段落化前の分）
+		//◆ログを取得（段落分け前の分）
 		var log_str = newlog_str;
 		
 		var array_log = that.kag.variable.tf.system.backlog;
@@ -666,10 +673,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 
 		layer_menu.find(".log_body").html(log_str);
 		layer_menu.show();
-		
-		//空タグを削除
-		//$(".log_body").find("p[class!='chara_name']:empty").remove();
-		
+				
 		//◆設定呼び出し
 		var log_conf = that.kag.variable.sf.log_conf;
 		
@@ -693,13 +697,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 		
 			layer_menu.find(".log_body").addClass('vertical')
 			$(".log_body").css('overflow-y','').css('overflow-x','scroll').css('writing-mode','vertical-rl').css('-webkit-writing-mode','vertical-rl').css('position','absolute').css('top','10%').css('left','3%');
-			
-			/* margin指定はやめ
-			if(e.log_p_margin != 0)$(".log_body").find("p[class!='chara_name']").css('margin-left',e.log_p_margin + 'em');
-			if(e.log_chara_name_margin != 0)$(".log_body").find(".chara_name").css('margin-right',e.log_chara_name_margin + 'em');
-			if(e.log_mtext_margin != 0)$(".log_body").find(".mtext").css('margin','0 ' + e.log_mtext_margin + 'em');
-			*/
-			
+						
 			//上下ホールで横スクロール
 			var mousewheelevent = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
 			$(document).on(mousewheelevent,function(e){
@@ -719,12 +717,6 @@ tyrano.plugin.kag.menu.displayLog = function () {
 			layer_menu.find(".log_body").scrollLeft(0);
 			
 		} else {
-			
-			/*
-			if(e.log_p_margin != 0)$(".log_body").find("p[class!='chara_name']").css('margin-bottom',e.log_p_margin + 'em');
-			if(e.log_chara_name_margin != 0)$(".log_body").find(".chara_name").css('margin-top',e.log_chara_name_margin + 'em');
-			if(e.log_mtext_margin != 0)$(".log_body").find(".mtext").css('margin',e.log_mtext_margin + 'em 0');
-			*/
 			
 			//一番下固定させる
 			layer_menu.find(".log_body").scrollTop(9999999999);
