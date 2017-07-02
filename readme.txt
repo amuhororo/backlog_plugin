@@ -37,13 +37,13 @@ http://hororo.wp.xdomain.jp/118/
 　③backlog/backlog.css でデザインを変更する。
 
 　◆パラメーター（※デフォルトの場合は省略可）
-　　　パラメータ名	値					省略時		説明
-　　　def_style		true/false			false		デフォルトフォントスタイルをログに反映させるか。
-　　　font_style	true/false			false		[font]をログにログに反映させるか。
-　　　name_repeat	true/false			true		同じキャラのセリフが続く場合、毎行キャラ名を入れるか。
-　　　name_none		true/false			false		ログにキャラ名を入れないか。
-　　　glink_log		true/false/文字列	false		[glink]の選択をログに表示。
-　　　												※文字列を入れると、ログのキャラ名部分に文字列が入ります。
+　　　パラメータ名　値                  省略時   説明
+　　　def_style　　 true/false          false    デフォルトフォントスタイルをログに反映させるか。
+　　　font_style    true/false          false    [font]をログにログに反映させるか。
+　　　name_repeat   true/false          true     同じキャラのセリフが続く場合、毎行キャラ名を入れるか。
+　　　name_none     true/false          false    ログにキャラ名を入れないか。
+　　　glink_log     true/false/文字列   false    [glink]の選択をログに表示。
+                                                 ※文字列を入れると、ログのキャラ名部分に文字列が入ります。
 　　　
 　◆記述例
 　　例1：キャラ名重複なし、[glink]ログ反映。
