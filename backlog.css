@@ -158,7 +158,7 @@
 
 /********* glink *********/
 .log_body.vertical .glink{
-	font-weight:bold;
+	
 }
 
 /********* pushlog *********/
@@ -170,7 +170,9 @@
 
 
 
-/********* Tate Chu Yoko *********/
+/******************************************
+    Tate Chu Yoko
+******************************************/
 .tcy,.text_tcy span {
 	-webkit-text-combine: horizontal;
 	-ms-text-combine-horizontal: all;
