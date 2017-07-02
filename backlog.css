@@ -1,0 +1,178 @@
+@charset "utf-8";
+/* CSS Document */
+
+.log_body {
+}
+
+/********* log line *********/
+.log_body dl {
+	display:flex;
+	padding-top:10px;
+	margin-top:10px;
+	border-top: 1px solid #eee;
+	box-sizing:border-box;
+}
+.log_body dl.none {
+	padding-top:0;
+	margin-top:0;
+	border-top: none;
+}
+.log_body dl:first-child {
+	border-top: none;
+	margin-top:0;
+}
+
+.log_body dl dt,
+.log_body dl dd,
+.log_body .pushlog {
+	padding: 5px 3px;
+	box-sizing:border-box;
+	line-height:1.5;
+}
+
+/********* chara name *********/
+.log_body dl dt{
+	width:18%;
+	position:relative;
+}
+.log_body dl dt.name:after{
+	content: "≫";
+	font-size:82%;
+	position:absolute;
+	top:7px;
+	right:20px;
+}
+.log_body dl.none dt{
+	display:none;
+}
+.log_body dl.none:first-child dt{
+	display:block;
+}
+
+
+/********* text *********/
+.log_body dl dd{
+	width:100%;
+}
+.log_body dl dt + dd{
+	width:82%;
+}
+.log_body dl.none dd{
+	margin-left:18%;
+}
+.log_body dl.none:first-child dd{
+	margin-left:0;
+}
+
+/********* glink *********/
+.log_body .glink{
+	font-weight:bold;
+}
+
+/********* pushlog *********/
+.log_body .log{
+	margin-top:10px;
+	padding:15px 3px 3px 3px;
+	border-top: 1px solid #eee;
+}
+
+
+
+
+
+
+
+/******************************************
+    vertical
+******************************************/
+.log_body.vertical {
+	margin:0 4% !important;
+	height:75% !important;
+}
+.log_body.vertical dl {
+	padding-top:0;
+	margin-top:0;
+	padding-right:10px;
+	margin-right:10px;
+	border-right: 1px solid #eee;
+	border-top: none;
+}
+
+.log_body.vertical dl.none {
+	padding-right:0;
+	margin-right:0;
+	border-right: none;
+}
+.log_body.vertical dl:first-child {
+	margin-right:0;
+}
+.log_body.vertical dl:last-child {
+	border-left: 1px solid #eee;
+	padding-left:10px;
+}
+.log_body.vertical dl.none:first-child {
+	border-right: 1px solid #eee;
+}
+
+.log_body.vertical dl dt,
+.log_body.vertical dl dd,
+.log_body.vertical .pushlog {
+	padding: 3px;
+}
+
+/********* chara name *********/
+.log_body.vertical dl dt{
+	width:auto;
+	height:20%;
+	padding-top:5px;
+}
+.log_body.vertical dl dt.name:after{
+	display:none;
+}
+.log_body.vertical dl.none dt{
+	display:none;
+}
+.log_body.vertical dl.none:first-child dt{
+	display:block;
+}
+
+/********* text *********/
+.log_body.vertical dl dd{
+	width:auto;
+	height:100%;
+	padding-top:0.5em;
+	border-top:1px dotted #eee;
+}
+.log_body.vertical dl dt + dd{
+	height:80%;
+}
+
+.log_body.vertical dl.none dd{
+	margin-left:auto;
+	margin-top:20%;
+}
+.log_body.vertical dl.none:first-child dd{
+	margin-left:auto;
+	margin-top:0;
+}
+
+/********* glink *********/
+.log_body.vertical .glink{
+	font-weight:bold;
+}
+
+/********* pushlog *********/
+.log_body.vertical .log{
+	margin-right:10px;
+	padding-right:13px;
+	border-right: 1px solid #eee;
+}
+
+
+
+/********* Tate Chu Yoko *********/
+.tcy,.text_tcy span {
+	-webkit-text-combine: horizontal;
+	-ms-text-combine-horizontal: all;
+	text-combine-upright: all;
+}
