@@ -34,8 +34,6 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 		
 		}else this.variable.tf.name_count = this.variable.tf.name_count + 1;//名前のカウント
 		var name_count = this.variable.tf.name_count;
-				
-		console.log(log_name + ":" + name_count + ":" + log_text)
 
 		if(log_text!=""){ //ログがある
 			if(this.kag.tmp.backlog.name_repeat == "false" && name_count > 1){
