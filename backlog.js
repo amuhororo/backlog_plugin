@@ -16,7 +16,9 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 	
  	//キャラ名取得
 	var chara_name = $.isNull($(".chara_name_area").html());
-	var log_name_tag = (this.tmp.backlog.name_none == "true") ? "" : "<dt class='name'>" + log_name + "</dt>" ;
+	//キャラ名のname値
+	var c_name = (this.kag.stat.jcharas[chara_name]) ? this.kag.stat.jcharas[chara_name] : "name";
+	var log_name_tag = (this.tmp.backlog.name_none == "true") ? "<dt class='name_none'></dt>" : "<dt class='"+ c_name +"'>" + log_name + "</dt>" ;
 	
 	if(type=="join"){
 		this.variable.tf["backlog_text"] = log_text + str;//join時は一時保存へ
@@ -34,14 +36,14 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 		
 		}else this.variable.tf.name_count = this.variable.tf.name_count + 1;//名前のカウント
 		var name_count = this.variable.tf.name_count;
-
+				
 		if(log_text!=""){ //ログがある
 			if(this.kag.tmp.backlog.name_repeat == "false" && name_count > 1){
 				//カウント2以上の時はclass=noneを入れてdisplay:noneしとく。
 				//strは動作確認用だけど残しとく…
-				this.variable.tf["system"]["backlog"].push( "<dl class='" + str + " none'>" + log_name_tag + "<dd class='text'>" + font_tag + log_text + "</dd></dl>");
+				this.variable.tf["system"]["backlog"].push( "<dl class='" + str + " none'>" + log_name_tag + "<dd>" + font_tag + log_text + "</dd></dl>");
 			}else{
-				this.variable.tf["system"]["backlog"].push( "<dl class='" + str + "'>" + log_name_tag + "<dd class='text'>" + font_tag + log_text + "</dd></dl>");
+				this.variable.tf["system"]["backlog"].push( "<dl class='" + str + "'>" + log_name_tag + "<dd>" + font_tag + log_text + "</dd></dl>");
 			}
 		}
 		//一時保存ログをクリア
@@ -75,12 +77,12 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 //■[p]
 tyrano.plugin.kag.tag.p.start = function() {
 	var that = this;
-	this.kag.stat.flag_ref_page = true;
 	
 	/*** ◆ バックログの段落作成 ***********************************************************/
 	this.kag.pushBackLog("p","p");
 	/*** ◆ end ****************************************************************************/
 	
+	this.kag.stat.flag_ref_page = true;
 	if (this.kag.stat.is_skip == true) {
 		this.kag.ftag.nextOrder();
 	}else if(this.kag.stat.is_auto == true){
@@ -295,10 +297,18 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
 			}
 
 			/*** ◆ バックログに入れる場合の処理 ***************************************************/
-			if(that.kag.tmp.backlog.glink_log != "false"){
-				if(that.kag.tmp.backlog.glink_log == "true")var glink_name = "≪選択≫";
-				else var glink_name = that.kag.tmp.backlog.glink_log;
-				that.kag.pushBackLog("<dl class='glink'><dt class='name'>" + glink_name + "</dt><dd class='text'>" + _pm.text + "</dd></dl>","glink");
+			var glink_name = "≪選択≫";
+			console.log("glink："+_pm.log)
+			if(_pm.log){
+				if(_pm.log != "false"){
+					if(_pm.log != "true")glink_name = _pm.log;
+					that.kag.tmp.backlog.glink_flag = true;
+					that.kag.pushBackLog("<dl class='glink'><dt>" + glink_name + "</dt><dd>" + _pm.text + "</dd></dl>","glink");
+				}
+			}else if(that.kag.tmp.backlog.glink_log!="false"){
+					if(that.kag.tmp.backlog.glink_log != "true")glink_name = that.kag.tmp.backlog.glink_log;
+					that.kag.tmp.backlog.glink_flag = true;
+					that.kag.pushBackLog("<dl class='glink'><dt>" + glink_name + "</dt><dd>" + _pm.text + "</dd></dl>","glink");
 			}
 			/*** ◆ end *****************************************************************************/
 

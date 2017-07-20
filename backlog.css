@@ -23,8 +23,7 @@
 }
 
 .log_body dl dt,
-.log_body dl dd,
-.log_body .pushlog {
+.log_body dl dd {
 	padding: 5px 3px;
 	box-sizing:border-box;
 	line-height:1.5;
@@ -35,14 +34,15 @@
 	width:18%;
 	position:relative;
 }
-.log_body dl dt.name:after{
+.log_body dl dt:after{
 	content: "≫";
 	font-size:82%;
 	position:absolute;
 	top:7px;
 	right:20px;
 }
-.log_body dl.none dt{
+.log_body dl.none dt,
+.log_body dl dt.name_none{
 	display:none;
 }
 .log_body dl.none:first-child dt{
@@ -63,6 +63,10 @@
 .log_body dl.none:first-child dd{
 	margin-left:0;
 }
+.log_body dl dt.none + dd{
+	margin-left:0;
+}
+
 
 /********* glink *********/
 .log_body .glink{
@@ -115,8 +119,7 @@
 }
 
 .log_body.vertical dl dt,
-.log_body.vertical dl dd,
-.log_body.vertical .pushlog {
+.log_body.vertical dl dd {
 	padding: 3px;
 }
 
@@ -126,15 +129,17 @@
 	height:20%;
 	padding-top:5px;
 }
-.log_body.vertical dl dt.name:after{
+.log_body.vertical dl dt:after{
 	display:none;
 }
-.log_body.vertical dl.none dt{
+.log_body.vertical dl.none dt,
+.log_body.vertical dl dt.name_none{
 	display:none;
 }
 .log_body.vertical dl.none:first-child dt{
 	display:block;
 }
+
 
 /********* text *********/
 .log_body.vertical dl dd{
@@ -155,6 +160,13 @@
 	margin-left:auto;
 	margin-top:0;
 }
+.log_body.vertical dl dt.none + dd{
+	margin-top:0;
+	border-top:none;
+	height:100%;
+}
+
+
 
 /********* glink *********/
 .log_body.vertical .glink{
@@ -164,7 +176,7 @@
 /********* pushlog *********/
 .log_body.vertical .log{
 	margin-right:10px;
-	padding-right:13px;
+	padding:3px 13px 3px 3px;
 	border-right: 1px solid #eee;
 }
 
