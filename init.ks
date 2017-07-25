@@ -1,5 +1,5 @@
-;【バックログプラグイン Ver.2.00a】
-; 2017/7/3更新　by hororo http://hororo.wp.xdomain.jp/
+;【バックログプラグイン Ver.2.01】
+; 2017/7/26更新　by hororo http://hororo.wp.xdomain.jp/
 [iscript]
 TG.kag.tmp.backlog = {
 	def_style : mp.def_style || 'false',

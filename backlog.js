@@ -298,7 +298,6 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
 
 			/*** ◆ バックログに入れる場合の処理 ***************************************************/
 			var glink_name = "≪選択≫";
-			console.log("glink："+_pm.log)
 			if(_pm.log){
 				if(_pm.log != "false"){
 					if(_pm.log != "true")glink_name = _pm.log;
