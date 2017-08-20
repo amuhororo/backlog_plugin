@@ -67,6 +67,9 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 	this.variable.tf.backlog_name = chara_name;
 	/*** ◆ end ****************************************************************************/
 
+	//セーブ用のテキストファイルを保存
+	this.stat.current_save_str = this.variable.tf["system"]["backlog"][this.variable.tf.system.backlog.length-1];
+		
 	if(max_back_log < this.variable.tf["system"]["backlog"].length){
 		this.variable.tf["system"]["backlog"].shift();
 	} 	
