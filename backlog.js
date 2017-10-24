@@ -9,7 +9,7 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 	if(max_back_log < 1 ) return ;
 	
 	
-	/** ◆ ここから改変 **********************************************************/
+	// ◆ ここから改造
 	//一時保存ログ
 	var log_text = (this.variable.tf.backlog_text) ? this.variable.tf.backlog_text : "";
 	var log_name = (this.variable.tf.backlog_name) ? this.variable.tf.backlog_name : "";
@@ -39,7 +39,7 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 				
 		if(log_text!=""){ //ログがある
 			if(this.kag.tmp.backlog.name_repeat == "false" && name_count > 1){
-				//カウント2以上の時はclass=noneを入れてdisplay:noneしとく。
+				//カウント2以上の時はclass=noneを入れてdisplay:noneしとく
 				//strは動作確認用だけど残しとく…
 				this.variable.tf["system"]["backlog"].push( "<dl class='" + str + " none'>" + log_name_tag + "<dd>" + font_tag + log_text + "</dd></dl>");
 			}else{
@@ -62,14 +62,12 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 		this.variable.tf["system"]["backlog"].push("<dl class='log'>" + str + "</dl>");
 	};
 	
-	//キャラ名保存し直し。
+	//キャラ名保存し直し
 	if(log_name != chara_name)this.variable.tf.name_count = 0;
 	this.variable.tf.backlog_name = chara_name;
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 
-	//セーブ用のテキストファイルを保存
 	this.stat.current_save_str = this.variable.tf["system"]["backlog"][this.variable.tf.system.backlog.length-1];
-		
 	if(max_back_log < this.variable.tf["system"]["backlog"].length){
 		this.variable.tf["system"]["backlog"].shift();
 	} 	
@@ -81,11 +79,12 @@ tyrano.plugin.kag.pushBackLog = function(str,type){
 tyrano.plugin.kag.tag.p.start = function() {
 	var that = this;
 	
-	/*** ◆ バックログの段落作成 ***********************************************************/
+	// ◆ バックログ処理
 	this.kag.pushBackLog("p","p");
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 	
 	this.kag.stat.flag_ref_page = true;
+	this.kag.ftag.showNextImg();
 	if (this.kag.stat.is_skip == true) {
 		this.kag.ftag.nextOrder();
 	}else if(this.kag.stat.is_auto == true){
@@ -110,9 +109,9 @@ tyrano.plugin.kag.tag.p.start = function() {
 //■[r]
 tyrano.plugin.kag.tag.r.start = function() {
 
-	/*** ◆ バックログ処理 *****************************************************************/
+	// ◆ バックログ処理
 	this.kag.pushBackLog("r","p");
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 
 	var that = this;
 	var j_inner_message = this.kag.getMessageInnerLayer();
@@ -127,9 +126,9 @@ tyrano.plugin.kag.tag.r.start = function() {
 //■[er]
 tyrano.plugin.kag.tag.er.start = function() {
 
-	/*** ◆ バックログの段落作成 ***********************************************************/
+	// ◆ バックログ処理
 	this.kag.pushBackLog("er","p");
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 
 	this.kag.ftag.hideNextImg();
 	this.kag.getMessageInnerLayer().html("");
@@ -139,12 +138,13 @@ tyrano.plugin.kag.tag.er.start = function() {
 //■[cm]
 tyrano.plugin.kag.tag.cm.start = function() {
 
-	/*** ◆ バックログの段落作成 ***********************************************************/
+	// ◆ バックログ処理
 	this.kag.pushBackLog("cm","p");
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 
 	this.kag.ftag.hideNextImg();
 	this.kag.layer.clearMessageInnerLayerAll();
+	this.kag.stat.log_clear = true;
 	this.kag.layer.getFreeLayer().html("").hide();
 	this.kag.ftag.startTag("resetfont");
 };
@@ -152,9 +152,9 @@ tyrano.plugin.kag.tag.cm.start = function() {
 //■[ct]
 tyrano.plugin.kag.tag.ct.start = function() {
 
-	/*** ◆ バックログの段落作成 ***********************************************************/
+	// ◆ バックログ処理
 	this.kag.pushBackLog("ct","p");
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 
 	this.kag.ftag.hideNextImg();
 	this.kag.layer.clearMessageInnerLayerAll();
@@ -167,9 +167,9 @@ tyrano.plugin.kag.tag.ct.start = function() {
 //■[s]
 tyrano.plugin.kag.tag.s.start = function() {
 
-	/*** ◆ バックログの段落作成 ***********************************************************/
+	// ◆ バックログ処理
 	this.kag.pushBackLog("s","p");
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 
 	this.kag.stat.is_strong_stop = true;
 	this.kag.layer.hideEventLayer();
@@ -191,33 +191,28 @@ tyrano.plugin.kag.tag.font.start = function(pm) {
 	
 	if (pm.size) {
 		this.kag.stat.font.size = pm.size;
-		/*** ◆ ログ用 *******************************************************************/
+		// ◆ ログ用
 		var style_size = 'font-size:' + pm.size + 'px;';
-		/*** ◆ end **********************************************************************/
 	}
 	if (pm.color) {
 		this.kag.stat.font.color = $.convertColor(pm.color);
-		/*** ◆ ログ用 *******************************************************************/
+		// ◆ ログ用
 		var style_color = 'color:' + $.convertColor(pm.color) + ';';
-		/*** ◆ end **********************************************************************/
 	}
 	if (pm.bold) {
 		this.kag.stat.font.bold = $.convertBold(pm.bold);
-		/*** ◆ ログ用 *******************************************************************/
+		// ◆ ログ用
 		var style_bold = 'font-weight:' + $.convertBold(pm.bold) + ';';	
-		/*** ◆ end **********************************************************************/
 	}
 	if (pm.face) {
 		this.kag.stat.font.face = pm.face;
-		/*** ◆ ログ用 *******************************************************************/
+		// ◆ ログ用
 		var style_face = 'font-family:' + pm.face + ';';
-		/*** ◆ end **********************************************************************/
 	}
 	if (pm.italic){
 		this.kag.stat.font["italic"] = $.convertItalic(pm.italic);
-		/*** ◆ ログ用 *******************************************************************/
+		// ◆ ログ用
 		var style_italic = 'font-style:' + $.convertItalic(pm.italic) + ';';
-		/*** ◆ end **********************************************************************/
 	}
 	
 	if (pm.edge) {
@@ -235,20 +230,20 @@ tyrano.plugin.kag.tag.font.start = function(pm) {
 		}
 	}
 	
-	/*** ◆ 縦中横処理 ********************************************************************/
+	// ◆ 縦中横処理
 	if (pm.tcy){
 		this.kag.tmp.tcy = true;
 		var style_tcy = "class='tcy' ";
 	}
-	/*** ◆ end ****************************************************************************/
+	// ◆ end
 	
-	/*** ◆ バックログ処理 *****************************************************************/
+	// ◆ バックログ処理
 	if(this.kag.tmp.backlog.font_style == "true"){
 		var backlog = '<span ' + style_tcy +'style="' + style_color + style_size + style_bold + style_italic + style_face + '">';
 		this.kag.tmp.backlog.font_tag = backlog;
 		this.kag.pushBackLog(backlog,"join");
 	}
-	/*** ◆ end *****************************************************************************/
+	// ◆ end
 
 	this.kag.ftag.nextOrder();
 };
@@ -257,7 +252,7 @@ tyrano.plugin.kag.tag.font.start = function(pm) {
 //■[resetfont]
 tyrano.plugin.kag.tag.resetfont.start = function() {
 	
-	/*** ◆ バックログ処理 *****************************************************************/
+	// ◆ バックログ処理
 	this.kag.tmp.backlog.font_flag = false;
 	this.kag.tmp.backlog.font_tag = "";
 	this.kag.tmp.tcy = false;//縦中横フラグ解除
@@ -266,16 +261,8 @@ tyrano.plugin.kag.tag.resetfont.start = function() {
 		if(this.kag.tmp.backlog.font_style == "true" || this.kag.tmp.tcy == true){
 			this.kag.pushBackLog("</span>","join");
 		}
-/*
-		//縦中横
-		else if (this.kag.tmp.tcy == true){
-			this.kag.pushBackLog("</span>","join");
-			this.kag.tmp.backlog.font_tag = "";
-			this.kag.tmp.tcy = false;
-		}
-*/
 	}
-	/*** ◆ end *****************************************************************************/
+	// ◆ end
 	
 	var j_span = this.kag.setMessageCurrentSpan();
 	this.kag.stat.font = $.extend(true, {}, this.kag.stat.default_font);
@@ -295,11 +282,12 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
 		j_button.click(function(e) {
 			if (_pm.clickse != "") {
 				that.kag.ftag.startTag("playse", {
-					"storage" : _pm.clickse
+					"storage" : _pm.clickse,
+					"stop" : true
 				});
 			}
 
-			/*** ◆ バックログに入れる場合の処理 ***************************************************/
+			// ◆ バックログ処理
 			var glink_name = "≪選択≫";
 			if(_pm.log){
 				if(_pm.log != "false"){
@@ -312,7 +300,7 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
 					that.kag.tmp.backlog.glink_flag = true;
 					that.kag.pushBackLog("<dl class='glink'><dt>" + glink_name + "</dt><dd>" + _pm.text + "</dd></dl>","glink");
 			}
-			/*** ◆ end *****************************************************************************/
+			// ◆ end
 
 			if (that.kag.stat.is_strong_stop != true) {
 				return false;
@@ -364,20 +352,22 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
 tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm) {
 	var that = this;
 /*
+	if(that.kag.stat.log_join=="true"){
+		pm.backlog="join";
+	}
 	var chara_name = $.isNull($(".chara_name_area").html());
-	if(chara_name != ""){
-		this.kag.pushBackLog("<b>"+chara_name+"</b>："+message_str,"add");
+	if((chara_name != "" && pm.backlog!="join") || (chara_name!="" && this.kag.stat.f_chara_ptext=="true")){
+		this.kag.pushBackLog("<b class='backlog_chara_name "+chara_name+"'>"+chara_name+"</b>：<span class='backlog_text "+chara_name+"'>"+message_str+"</span>","add");
+		if(this.kag.stat.f_chara_ptext=="true"){
+			this.kag.stat.f_chara_ptext="false";
+			this.kag.stat.log_join = "true";
+		}
 	}else{
+		var log_str = "<span class='backlog_text "+chara_name+"'>"+ message_str +"</span>";
 		if(pm.backlog=="join"){
-			this.flag_join = true;
-			this.kag.pushBackLog(message_str,"join");
+			this.kag.pushBackLog(log_str,"join");
 		}else{
-			if(this.flag_join==true){
-				this.kag.pushBackLog(message_str,"join");
-				this.flag_join=false;
-			}else{
-				this.kag.pushBackLog(message_str,"add");
-			}
+			this.kag.pushBackLog(log_str,"add");
 		}
 	}
 */	
@@ -418,7 +408,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm) {
 				}
 			}
 		}
-		var ch_speed = 30;		
+		var ch_speed = 30;
 		if(that.kag.stat.ch_speed != ""){
 			ch_speed = parseInt(that.kag.stat.ch_speed);
 		}else if(that.kag.config.chSpeed){
@@ -431,9 +421,9 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm) {
 				that.kag.stat.ruby_str = "";
 			}
 			
-			/*** ◆ ログ保存 **********************************************************/
+			// ◆ ログ保存
 			that.kag.pushBackLog(c,"join");			
-			/*** ◆ end ***************************************************************/
+			// ◆ ログ保存ここまで
 
 			current_str += c;
 			if(that.kag.stat.is_skip != true && that.kag.stat.is_nowait!=true && ch_speed >3){
@@ -442,9 +432,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm) {
 			if (index <= _message_str.length) {
 				that.kag.stat.is_adding_text = true;
 				if (that.kag.stat.is_click_text == true || that.kag.stat.is_skip == true || that.kag.stat.is_nowait == true) {
-					setTimeout(function() {
-						pchar(pchar)
-					}, 0);
+					pchar(pchar);
 				} else {
 					setTimeout(function() {
 						pchar(pchar)
@@ -465,12 +453,6 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm) {
 					}
 				} else {
 				}
-				if (that.kag.stat.flag_glyph == "false") {
-					$(".img_next").remove();
-					jtext.find("p").append("<img class='img_next' src='./tyrano/images/system/nextpage.gif' />");
-				} else {
-					$(".glyph_image").show();
-				}
 			}
 		};
 		pchar(pchar);
@@ -478,21 +460,22 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm) {
 };
 tyrano.plugin.kag.tag.text.showMessageVertical = function(message_str,pm) {
 	var that = this;
-	that.kag.ftag.hideNextImg();
 	
 /*
+	if(that.kag.stat.log_join=="true"){
+		pm.backlog="join";
+	}
+	if(this.kag.stat.f_chara_ptext=="true"){
+		this.kag.stat.f_chara_ptext="false";
+		this.kag.stat.log_join = "false";
+	}
 	if(pm.backlog=="join"){
-		this.flag_join = true;
 		this.kag.pushBackLog(message_str,"join");
 	}else{
-		if(this.flag_join==true){
-			this.kag.pushBackLog(message_str,"join");
-			this.flag_join=false;
-		}else{
-			this.kag.pushBackLog(message_str,"add");
-		}
+		this.kag.pushBackLog(message_str,"add");
 	}
 */	
+	that.kag.ftag.hideNextImg();
 	(function(jtext) {
 		if (jtext.html() == "") {
 			jtext.append("<p class='vertical_text'></p>");
@@ -506,9 +489,9 @@ tyrano.plugin.kag.tag.text.showMessageVertical = function(message_str,pm) {
 		that.kag.checkMessage(jtext);
 		var j_span = that.kag.getMessageCurrentSpan();
 
-		/*** ◆ 縦中横 ************************************************************/
+		// ◆ 縦中横 
 		if(that.kag.tmp.tcy == true)j_span.addClass("tcy");
-		/*** ◆ end ***************************************************************/
+		// ◆ 縦中横ここまで
 		
 		j_span.css({
 			"color":that.kag.stat.font.color,
@@ -543,9 +526,9 @@ tyrano.plugin.kag.tag.text.showMessageVertical = function(message_str,pm) {
 				that.kag.stat.ruby_str = "";
 			}
 			
-			/*** ◆ ログ保存 **********************************************************/
+			// ◆ ログ保存
 			that.kag.pushBackLog(c,"join");			
-			/*** ◆ end ***************************************************************/
+			// ◆ ログ保存ここまで
 
 			current_str += c;
 			if(that.kag.stat.is_skip != true && that.kag.stat.is_nowait!=true){
@@ -554,9 +537,7 @@ tyrano.plugin.kag.tag.text.showMessageVertical = function(message_str,pm) {
 			if (index <= _message_str.length) {
 				that.kag.stat.is_adding_text = true;
 				if (that.kag.stat.is_click_text == true || that.kag.stat.is_skip == true) {
-					setTimeout(function() {
-						pchar(pchar)
-					}, 0);
+					pchar(pchar);
 				} else {
 					setTimeout(function() {
 						pchar(pchar)
@@ -572,13 +553,6 @@ tyrano.plugin.kag.tag.text.showMessageVertical = function(message_str,pm) {
 					}, parseInt(that.kag.config.skipSpeed));
 				}else{
 					that.kag.ftag.nextOrder()
-				}
-				if (that.kag.stat.flag_glyph == "false") {
-					$(".img_next").remove();
-					jtext.find("p").append("<img class='img_next' src='./tyrano/images/system/nextpage.gif' />");
-
-				} else {
-					$(".glyph_image").show();
 				}
 			}
 		};
@@ -615,7 +589,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 		
 		layer_menu.find(".button_smart").hide();
 		
-		/*** ◆ スマホのボタンの上下でスクロールを縦書き用も追加してみたけど未確認 *******/
+		// ◆ スマホのボタンの上下でスクロールを縦書き用も追加してみたけど未確認
 		if ( that.kag.config.vertical == "true" ){
 			if($.userenv()!="pc"){
 				layer_menu.find(".button_smart").show();
@@ -645,7 +619,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 				});
 			}
 		}
-		/*** ◆ end *****************************************************************************/
+		// ◆ end
 
 		var log_str = "";
 		var array_log = that.kag.variable.tf.system.backlog;
@@ -653,7 +627,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 			log_str += array_log[i];
 		}
 
-		/*** ◆ 一時保存分のログを取得 **********************************************************/
+		// ◆ 一時保存分のログを取得
 		var log_name = that.kag.variable.tf.backlog_name;
 		var log_text = that.kag.variable.tf.backlog_text;
 		
@@ -661,15 +635,15 @@ tyrano.plugin.kag.menu.displayLog = function () {
 
 		var none = (that.kag.variable.tf.name_count > 0) ? " none" : "";
 		var log_tmp = (log_text) ? "<dl class='a" + none + "'>" + log_name_tag + "<dd class='text'>" + log_text + "</dd></dl>" : "" ;
-		/*** ◆ end *****************************************************************************/
+		// ◆ end
 		
-		/*** ◆ 一時保存ログも追加 **************************************************************/
+		// ◆ 一時保存ログも追加
 		layer_menu.find(".log_body").html(log_str + log_tmp);
-		/*** ◆ end *****************************************************************************/
+		// ◆ end
 
 		layer_menu.find(".log_body").css("font-family", that.kag.config.userFace);				
 				
-		/*** ◆ Config.tjsのデフォルト設定を追加 ************************************************/
+		// ◆ Config.tjsのデフォルト設定を追加
 		if(that.kag.tmp.backlog.def_style == "true"){
 			var line_height = parseInt(that.kag.config.defaultFontSize) + parseInt(that.kag.config.defaultLineSpacing);
 			line_height = parseInt(line_height) / parseInt(that.kag.config.defaultFontSize);
@@ -682,9 +656,9 @@ tyrano.plugin.kag.menu.displayLog = function () {
 				'color': $.convertColor(that.kag.config.defaultChColor)
 			});
 		};
-		/*** ◆ end *****************************************************************************/
+		// ◆ end
 
-		/*** ◆ 縦書き用 ************************************************************************/
+		// ◆ 縦書き用
 		if ( that.kag.config.vertical == "true" ){
 		
 			//align 削除を追加
@@ -709,18 +683,17 @@ tyrano.plugin.kag.menu.displayLog = function () {
         		}
 			});		
 		};
-		/*** ◆ end *****************************************************************************/
+		// ◆ end
 
-		/*** ◆ 縦書き時のスクロール処理を追記 **************************************************/
+		
 		$.preloadImgCallback(layer_menu,function(){
 			layer_menu.fadeIn(300);
 			if ( that.kag.config.vertical == "true" ){
-				layer_menu.find(".log_body").scrollLeft(0);
+				layer_menu.find(".log_body").scrollLeft(0);// ◆ 縦書き時のスクロール処理を追記
 			} else {
 				layer_menu.find(".log_body").scrollTop(9999999999);
 			};
 		},that);
-		/*** ◆ end *****************************************************************************/
 		
 		$(".button_menu").hide();
 	});
