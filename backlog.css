@@ -1,3 +1,5 @@
+/* 【バックログプラグイン Ver.2.04】2018/3/24         */
+/*  by hororo http://hororo.wp.xdomain.jp/118/      */
 @charset "utf-8";
 /* CSS Document */
 
@@ -170,7 +172,7 @@
 
 /********* glink *********/
 .log_body.vertical .glink{
-	
+
 }
 
 /********* pushlog *********/
@@ -189,4 +191,24 @@
 	-webkit-text-combine: horizontal;
 	-ms-text-combine-horizontal: all;
 	text-combine-upright: all;
+}
+
+
+
+/******************************************
+    SAVE・LOAD
+******************************************/
+/* 横書き */
+.save_list dl {
+}
+.save_list dl dt{
+	display:inline;
+}
+.save_list dl dt:after{
+	content: ":";
+	display:inline;
+	margin:0 0.5em;
+}
+.save_list dl dd {
+	display:inline;
 }
