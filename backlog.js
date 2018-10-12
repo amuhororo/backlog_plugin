@@ -1,4 +1,4 @@
-/* 【バックログプラグイン Ver.2.04】2018/3/24         */
+/* 【バックログプラグイン Ver.2.05】2018/10/12         */
 /*  by hororo http://hororo.wp.xdomain.jp/118/      */
 //■pushBackLog
 tyrano.plugin.kag.pushBackLog = function(str,type){
@@ -639,7 +639,7 @@ tyrano.plugin.kag.menu.displayLog = function () {
 
 		var log_name_tag = (that.kag.tmp.backlog.name_none == "true") ? "" : "<dt class='name'>" + log_name + "</dt>" ;
 
-		var none = (that.kag.variable.tf.name_count > 0) ? " none" : "";
+		var none = (that.kag.variable.tf.name_count > 0 && that.kag.tmp.backlog.name_none == "false") ? " none" : "";
 		var log_tmp = (log_text) ? "<dl class='a" + none + "'>" + log_name_tag + "<dd class='text'>" + log_text + "</dd></dl>" : "" ;
 		// ◆ end
 
