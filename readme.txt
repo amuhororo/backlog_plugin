@@ -25,7 +25,7 @@ http://hororo.wp.xdomain.jp/118/
 　・glinkのname欄に入る文字列を別パラメータに分離。
 　・名前とテキストの間の記号をパラメータで指定可能に。
 　・edgeやshadowがログに反映されなかった点を修正。
-　・ログの縦書きは onfig.tjs の vertical = true では対応になりません。パラメータで指定してください。
+　・ログの縦書きは Config.tjs の vertical = true では対応になりません。パラメータで指定してください。
 
 2.00以降改善された機能
 　・[font]を反映する際、タグの記述に制限があった点を改善。
@@ -72,6 +72,14 @@ http://hororo.wp.xdomain.jp/118/
 　　 ※[plugin] の glink_log よりも、[glink] の log が優先されます。
 　　 　例えば、[plugin glink_log=true]でonにしても、[glink log=false] で個別offが可能です。
 
+◆ 縦中横について
+　　・メッセージ
+　　　[font] のパラメータとして tcy=true を指定する。
+　　　例：[font size="30"]ちょっとまったーーー[resetfont][font size="30" tcy=true]!![resetfont]
+　　・glink・ptext
+　　　テキストの縦中横にしたい部分を <span></span> で囲い、name=text_tcy を指定します。
+　　　例：[ptext text="テキストテキスト<span>!?</span>" vertical=true name=text_tcy]
+　　　　　[glink text="興味あります<span>!!</span>" name="vertical,text_tcy"]
 -------------------------------------------------------------------------------------------------
 ■ ログのhtmlコード
 -------------------------------------------------------------------------------------------------
