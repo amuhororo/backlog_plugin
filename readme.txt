@@ -1,24 +1,33 @@
-﻿【バックログプラグイン Ver.2.05】
+バックログプラグイン Ver.3.00】
 http://hororo.wp.xdomain.jp/118/
 
-2018/10/12更新 v470対応版
+2020/9/3更新 v504対応版
 
 -------------------------------------------------------------------------------------------------
 ■ 機能
 -------------------------------------------------------------------------------------------------
 　・ログを整形します。
-　・キャラ名が無い時に、文頭に[font][ruby]があると改行しない問題に対応しています。※[p][r][er][ct][cm][s]時にログを纏めます。
-　・ルビをログに表示します。（非表示にはできません）
-　・キャラ名が重複しないようにできます。
-　・[font]タグをログに反映するかしないか選択可能。
-　・[glink]の選択をログに表示できます。※v2.01からは gling タグで直指定も可能
 　・CSSで自由に整形できます。
-　・ログの縦書き対応。Config.tjs で vertical = true になっていれば自動で縦書き表示になります。
-　・縦書きでもキャラ名が入ります。※v2.00から
-　・縦書き時の縦中横に対応。※v2.00から
-　・キャラ名のhtmlタグに、[chara_new] で定義した name値が class名として入ります。定義なしの場合は "name"。※2.01から
+　・キャラ名が無い時に、文頭に[font][ruby]があると改行しない問題に対応しています。
+　・[r]で改行しない問題に対応しています。
+　・ルビをログに表示します。（非表示にはできません）
+　・同じキャラのセリフが続く場合、キャラ名が重複しないようにできます。
+　・デフォルトフォントスタイルをログに反映するかしないか選択可能です。
+　・[font]タグをログに反映するかしないか選択可能です。
+　・[glink]の選択をログに表示できます。※v2.01以降は gling タグで直指定も可能
+　・ログの縦書き対応。※v3.00以降は要パラメータ指定
+　・縦書き時の縦中横に対応。※v2.00以降
+　・ログのhtmlタグに、[chara_new] で定義した name値が class名として入ります。定義なしの場合は "name"。※2.01以降
+  ・[chara_new]で指定した color をログに反映するか選択可能です。※v3.00以降
+  ・[font]タグに name パラメータを追加。自由にclass名付けれます。※v3.00以降
 
-2.00で改善された機能
+3.00で変更された機能
+　・glinkのname欄に入る文字列を別パラメータに分離。
+　・名前とテキストの間の記号をパラメータで指定可能に。
+　・edgeやshadowがログに反映されなかった点を修正。
+　・ログの縦書きは onfig.tjs の vertical = true では対応になりません。パラメータで指定してください。
+
+2.00以降改善された機能
 　・[font]を反映する際、タグの記述に制限があった点を改善。
 　・キャラ名を重複させず、同一キャラのセリフが続く場合、
 　　一行目のログが消えてもキャラ名が残るようになりました。
@@ -39,53 +48,72 @@ http://hororo.wp.xdomain.jp/118/
 　③backlog/backlog.css でデザインを変更する。
 
 　◆パラメーター（※デフォルトの場合は省略可）
-　　　パラメータ名　値　　　　　　　　　省略時　説明
-　　　def_style　　 true/false　　　　　false　 デフォルトフォントスタイルをログに反映させる場合は true
-　　　font_style　　true/false　　　　　false　 [font]をログにログに反映させる場合は true
-　　　name_repeat　 true/false　　　　　true　　同じキャラのセリフが続く場合、毎行キャラ名を入れる場合は true
-　　　name_none　　 true/false　　　　　false　 ログにキャラ名を入れないか。
-　　　glink_log　　 true/false/文字列　 false　 [glink]の選択をログに表示。
-　　　　　　　　　　　　　　　　　　　　　　　　  ※文字列を入れると、ログのキャラ名部分に文字列が入ります。
-　　　
+　　　パラメータ名　 値　　　      省略時　　　説明
+　　　def_style　　 true/false　　false　 　 デフォルトフォントスタイルをログに反映させる場合は true
+　　　font_style　　true/false　　false      [font]をログにログに反映させる場合は true
+　　　name_repeat　 true/false　　true       同じキャラのセリフが続く場合、毎行キャラ名を入れる場合は true
+　　　name_none　　 true/false　　false      ログにキャラ名を入れない場合は true
+　　　name_color    truefalse    false      [chara_new]タグで指定した色をバックログに反映させる場合は "true"
+　　　glink_log　　 true/false　　false      [glink]の選択をログに表示。
+　　　glink_name  　文字列　　　　≪選択肢≫　 [glink]の名前部分
+　　　mark        　文字列　　　　 ：         名前とテキストの間の記号※glinkには付きません
+　　　vertical    　true/false　　false      バックログを縦書きにする場合は true
+　　
 　◆記述例
 　　例1：キャラ名重複なし、[glink]ログ反映。
 　　　　[plugin name="backlog" name_repeat="true" glink_log="true"]
+
 　　例2：[font]反映、[glink]ログ反映＋ログタイトルを「Select」に。
-　　　　[plugin name="backlog" font_style="true" glink_log="Select"]
+　　　　[plugin name="backlog" font_style="true" glink_log="true" glink_name="Select"]
 
 　◆ [glink]
-　		[glink (略) log=true] or [glink (略) log=false] でログの on/off 切り替えができます。
-　		[plugin] の glink_log よりも、[glink] の log が優先されます。
-　
-　		例えば、[plugin glink_log=true]でonにしても、[glink log=false] で個別offが可能です。
+　　 [glink (略) log=true] or [glink (略) log=false] でログの on/off 切り替えができます。
+
+　　 ※[plugin] の glink_log よりも、[glink] の log が優先されます。
+　　 　例えば、[plugin glink_log=true]でonにしても、[glink log=false] で個別offが可能です。
 
 -------------------------------------------------------------------------------------------------
 ■ ログのhtmlコード
 -------------------------------------------------------------------------------------------------
-　◆通常ログ
-　　<dl><dt class="akane">あかね</dt><dd>テキスト</dd></dl>
-　　<dl><dt class="name">？</dt><dd>テキスト</dd></dl> //※chara_new の name値が無い場合
+  ◆通常ログ
+    <dl class="log">
+      <dt class="log_name akane"><span class="chara_name">あかね</span><span class="mark">：</span></dt>
+      <dd class="log_text akane"><span class="text">テキスト</span></dd>
+    </dl>
 
-　◆通常ログ（name_repeat=true時）
-　　<dl><dt class="akane">あかね</dt><dd>テキスト1行目</dd><dl>
-　　<dl class="none"><dt class="akane">あかね</dt><dd>テキスト2行目</dd></dl>
+    ※chara_new の name値が無い場合
+    <dl class="log">
+      <dt class="log_name no_name"><span class="chara_name">?</span><span class="mark">：</span></dt>
+      <dd class="log_text no_name"><span class="text">テキスト</span></dd>
+    </dl>
 
-　◆通常ログ（name_none=true時）
-　　<dl><dd>テキスト</dd></dl>
+  ◆通常ログ（name_repeat=true時）
+    <dl class="log">
+      <dt class="log_name akane"><span class="chara_name">あかね</span><span class="mark">：</span></dt>
+      <dd class="log_text akane"><span class="text">テキスト1行目</span></dd>
+    </dl>
+    <dl class="log none">
+      <dt class="log_name akane none"><span class="chara_name">あかね</span><span class="mark">：</span></dt>
+      <dd class="log_text akane"><span class="text">テキスト2行目</span></dd>
+    </dl>
 
-　◆glinkログ
-　　<dl class="glink"><dt>≪選択≫ or 設定値</dt><dd>テキスト</dd></dl>
+  ◆通常ログ（name_none=true時）
+    <dl class="log">
+      <dt class="name_none"></dt>
+      <dd class="log_text no_name"><span class="text">テキスト</span></dd>
+    </dl>
 
-　◆pushlogログ
-　　<dl class="log">テキスト</dl>
-　　
-　※htmlタグの使い方がおかしいですが、div p span では上手く表示出来ないので仕方なく…。
-　※セーブタイトルも同じコードで挿入されます。
+  ◆glinkログ
+    <dl class="log glink">
+      <dt class="log_name glink">≪選択肢≫</dt>
+      <dd class="log_text glink">テキスト</dd>
+    </dl>
+
 
 -------------------------------------------------------------------------------------------------
 ■ 動作確認
 -------------------------------------------------------------------------------------------------
-　ティラノスクリプトv472d
+　ティラノスクリプトv504a
 
 -------------------------------------------------------------------------------------------------
 ■ 注意点
@@ -98,20 +126,15 @@ http://hororo.wp.xdomain.jp/118/
 ■ 改造項目
 -------------------------------------------------------------------------------------------------
 　・kag.tag.js
-　　　・pushBackLog
-　
-　・kag.tag.js
 　　　・r
 　　　・p
 　　　・er
 　　　・cm
 　　　・ct
-　　　・s
 　　　・font
 　　　・resetfont
 　　　・glink
-　　　・showMessage
-　　　・showMessageVertical
+　　　・text.showMessage
 　　　
 　・kag.menu.js
 　　　・displayLog
@@ -144,6 +167,7 @@ http://hororo.wp.xdomain.jp/118/
 -------------------------------------------------------------------------------------------------
 ■ 更新履歴
 -------------------------------------------------------------------------------------------------
+　2020/09/03　ver3.00 設計変更。v504aにて動作確認。
 　2018/10/12　ver2.05 name_none=false で、[l]時にログがインデントされる不具合修正。v472dにて動作確認。
 　2018/03/24　ver2.04 [l]時にセーブタイトルが正しく取得出来ない不具合修正。v470_rc6bにて動作確認。
 　2017/10/24　ver2.03 ティラノv457g対応。グリフ表示方法変更に対応。
