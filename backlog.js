@@ -200,11 +200,11 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
     var button_clicked = false;
     j_button.click(function(e) {
       if (_pm.clickse != "") {
-                that.kag.ftag.startTag("playse", {
-                    "storage" : _pm.clickse,
-                    "stop" : true
-                });
-            }
+        that.kag.ftag.startTag("playse", {
+          "storage" : _pm.clickse,
+          "stop" : true
+        });
+      }
 
       //--- ◆ バックログに入れる場合の処理 --------------------------------------------------------
       var glink_name = that.kag.tmp.backlog.glink_name;
@@ -217,45 +217,45 @@ tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){
     	//--- ◆ end ------------------------------------------------------------------------------
 
       if (that.kag.stat.is_strong_stop != true) {
-                return false;
-            }
+        return false;
+      }
       button_clicked = true;
       if (_pm.exp != "") {
-                that.kag.embScript(_pm.exp, preexp);
-            }
+        that.kag.embScript(_pm.exp, preexp);
+      }
       that.kag.layer.showEventLayer();
       that.kag.ftag.startTag("cm", {});
       that.kag.ftag.startTag("jump", _pm);
       if(that.kag.stat.skip_link=="true"){
-                e.stopPropagation();
+        e.stopPropagation();
       }else{
-                that.kag.stat.is_skip = false;
-            }
+        that.kag.stat.is_skip = false;
+      }
     });
     j_button.hover(function() {
-            if (_pm.enterimg != "") {
-                var enterimg_url = "./data/image/" + _pm.enterimg;
-                j_button.css("background-image", "url(" + enterimg_url + ")");
-            }
-            if (_pm.enterse != "") {
-                that.kag.ftag.startTag("playse", {
-                    "storage" : _pm.enterse,
-                    "stop" : true
-                });
-            }
-        }),
+      if (_pm.enterimg != "") {
+        var enterimg_url = "./data/image/" + _pm.enterimg;
+        j_button.css("background-image", "url(" + enterimg_url + ")");
+      }
+      if (_pm.enterse != "") {
+        that.kag.ftag.startTag("playse", {
+          "storage" : _pm.enterse,
+          "stop" : true
+        });
+      }
+    }),
     function() {
-            if (_pm.enterimg != "") {
-                var img_url = "./data/image/" + _pm.graphic;
-                j_button.css("background-image", "url(" + img_url + ")");
-            }
-            if (_pm.leavese != "") {
-                that.kag.ftag.startTag("playse", {
-                    "storage" : _pm.leavese,
-                    "stop" : true
-                });
-            }
-        };
+      if (_pm.enterimg != "") {
+        var img_url = "./data/image/" + _pm.graphic;
+        j_button.css("background-image", "url(" + img_url + ")");
+      }
+      if (_pm.leavese != "") {
+        that.kag.ftag.startTag("playse", {
+          "storage" : _pm.leavese,
+          "stop" : true
+        });
+      }
+    };
   })();
 };
 
@@ -529,13 +529,13 @@ tyrano.plugin.kag.menu.displayLog = function() {
     layer_menu.empty();
     layer_menu.append(j_menu);
     layer_menu.find(".menu_close").click(function() {
-            layer_menu.fadeOut(300,function(){
-                layer_menu.empty();
-                });
-            if (that.kag.stat.visible_menu_button == true) {
-                $(".button_menu").show();
-            }
-        });
+      layer_menu.fadeOut(300,function(){
+        layer_menu.empty();
+      });
+      if (that.kag.stat.visible_menu_button == true) {
+        $(".button_menu").show();
+      }
+    });
     layer_menu.find(".button_smart").hide();
 
     //--- ◆ 縦書き用スクロール処理も追加 ----------------------------------------------------
