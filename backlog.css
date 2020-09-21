@@ -51,7 +51,7 @@
 }
 
 /********* mark *********/
-.log_body .log .mark{
+.log_body .log .log_line{
   display: inline-block;
   float: right;
 }
@@ -109,10 +109,10 @@
 }
 
 /********* text *********/
-.log_body .log .log_text{
+.log_body.vertical .log .log_text{
 	width:auto;
   height: 100%;
-}.log_body .log .log_name + .log_text{
+}.log_body.vertical .log .log_name + .log_text{
 	width:auto;
   height: 75%;
 }
@@ -135,7 +135,7 @@
 .save_list .log_text {
 	display:inline;
 }
-.save_list .log_name.no_name .mark{
+.save_list .log_name.no_name .log_line{
 	display:none;
 }
 .save_list .log_name .chara_name,

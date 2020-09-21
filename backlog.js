@@ -1,4 +1,4 @@
-/* 【バックログプラグイン Ver.3.00】2020/9/3          */
+/* 【バックログプラグイン Ver.3.01】2020/9/21          */
 /*  by hororo http://hororo.wp.xdomain.jp/118/      */
 
 //■[text]
@@ -312,7 +312,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
   //キャラ名ログ保存
   if(pm.backlog!="join" || this.kag.tmp.backlog.name_count < 2 || this.kag.stat.log_add == "true"){
     if(this.kag.tmp.backlog.name_none == "false"){
-      this.kag.pushBackLog("<dt class='log_name "+c_name + classnone + "'><span class='chara_name'"+name_color+">"+chara_name+"</span><span class='mark'>"+this.kag.tmp.backlog.mark+"</span></dt><dd class='log_text "+c_name+"'>","add");
+      this.kag.pushBackLog("<dt class='log_name "+c_name + classnone + "'><span class='chara_name'"+name_color+">"+chara_name+"</span><span class='log_line'>"+this.kag.tmp.backlog.mark+"</span></dt><dd class='log_text "+c_name+"'>","add");
     }else{
       this.kag.pushBackLog("<dt class='name_none'></dt><dd class='log_text "+c_name+"'>","add");
     }
@@ -321,6 +321,12 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 
   //--- ◆ メッセージ
   var log_span = "<span class='text'></span>";
+  //TIPプラグイン併用
+  if(this.kag.variable.tf.system.tip_conf!=undefined){
+    var tip_conf = this.kag.variable.tf.system.tip_conf;
+    log_span = "<span class='text" + tip_conf.tiplog_name + "'" + tip_conf.tiplog_key + tip_conf.tiplog_obj+"></span>";
+  }
+
   var log_style = $(log_span);
 
   //fontstyle指定
@@ -336,9 +342,11 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
       var edge_color = this.kag.tmp.backlog.font.edge;
       log_style.css("text-shadow","1px 1px 0 "+edge_color+", -1px 1px 0 "+edge_color+",1px -1px 0 "+edge_color+",-1px -1px 0 "+edge_color+"");
     } else if (this.kag.stat.font.shadow !="") {
-      j_span.css("text-shadow","2px 2px 2px "+this.kag.tmp.backlog.font.shadow);
+      log_style.css("text-shadow","2px 2px 2px "+this.kag.tmp.backlog.font.shadow);
     }
-  }
+  //} else if (this.kag.tmp.backlog.tiplog_color != ""){
+  //  log_style.css("color",this.kag.stat.font.color);
+  };
 
   //name追加
   if(this.kag.tmp.backlog.font_style == "true"){
@@ -348,6 +356,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
       if(this.kag.stat.font.name.includes("tcy")) $.setName(log_style, "tcy"); //style反映なしでも縦中横だけは入れる
     }
   };
+
   //ログ保存
   this.kag.pushBackLog(log_style.get(0).outerHTML.slice( 0, -7 ),"join");
   //--- ◆ end ------------------------------------------------------------------------------------------
@@ -590,7 +599,11 @@ tyrano.plugin.kag.menu.displayLog = function() {
 
     for (var i = 0; i < array_log.length; i++) {
       //--- ◆ ログ書き出し -------------------------------------------------------
-      log_str += "<dl class='log'>" + array_log[i] + "</dl>";
+      if(array_log[i].includes("script") && !array_log[i].includes("span")){
+        log_str += array_log[i];
+      } else {
+        log_str += "<dl class='log'>" + array_log[i] + "</dl>";
+      }
       //--- end ------------------------------------------------------------------
       //log_str += array_log[i] + "<br />";
     }
