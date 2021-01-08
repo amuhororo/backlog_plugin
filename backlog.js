@@ -44,6 +44,16 @@ tyrano.plugin.kag.tag.font.start = function(pm) {
     this.kag.tmp.backlog.font["italic"] = $.convertItalic(pm.italic);
     //--- ◆ end -----------------------------------------
   }
+  if(pm.effect){
+    if(pm.effect=="none"){
+      this.kag.stat.font["effect"] = "";
+    }else{
+      this.kag.stat.font["effect"] = pm.effect;
+    }
+  }
+  if(pm.effect_speed){
+    this.kag.stat.font["effect_speed"] = pm.effect_speed;
+  }
   if (pm.edge) {
     if(pm.edge=="none" || pm.edge==""){
       this.kag.stat.font.edge = "";
@@ -398,6 +408,11 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
     }
     var current_str = "";
     if (jtext.find("p").find(".current_span").length != 0) {
+      jtext.find("p").find(".current_span").find("span").css({
+        "opacity":1,
+        "visibility":"visible",
+        "animation":""
+      });
       current_str = jtext.find("p").find(".current_span").html();
     }
     that.kag.checkMessage(jtext);
@@ -471,16 +486,34 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
       that.kag.pushBackLog(c,"join");
       //--- ◆ end ---------------------------------------------------------------
 
-      append_str += "<span style='visibility: hidden'>" + c + "</span>";
+      if(c==" "){
+        append_str += "<span style='opacity:0'>" + c + "</span>";
+      }else{
+        append_str += "<span style='display:inline-block;opacity:0'>" + c + "</span>";
+      }
     }
     current_str += "<span>" + append_str + "</span>";
+    if(typeof that.kag.stat.font.effect =="undefined" || that.kag.stat.font.effect =="none" ){
+      that.kag.stat.font.effect = "";
+    }
     that.kag.appendMessage(jtext, current_str);
     var append_span = j_span.children('span:last-child');
     var makeVisible = function(index) {
-      append_span.children("span:eq(" + index + ")").css('visibility', 'visible');
+      if(that.kag.stat.font.effect!=""){
+        append_span.children("span:eq(" + index + ")").on("animationend",function(e){
+          $(e.target).css({
+            "opacity":1,
+            "visibility":"visible",
+            "animation":""
+          });
+        });
+        append_span.children("span:eq(" + index + ")").css('animation', "t"+that.kag.stat.font.effect+' '+that.kag.stat.font.effect_speed+' ease 0s 1 normal forwards');
+      }else{
+        append_span.children("span:eq(" + index + ")").css({'visibility':'visible','opacity':'1'});
+      }
     };
     var makeVisibleAll = function() {
-      append_span.children("span").css('visibility', 'visible');
+      append_span.children("span").css({'visibility':'visible','opacity':'1'});
     };
     var pchar = function(index) {
       var isOneByOne = (
