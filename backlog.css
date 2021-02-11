@@ -1,7 +1,61 @@
-@charset "utf-8";
-/* CSS Document */
+/* 【バックログプラグイン Ver.3.02】2021/02/11					*/
+/*	by hororo http://hororo.wp.xdomain.jp/118/			*/
 
+@charset "utf-8";
+* { box-sizing: border-box; }
+
+/**************************************
+  mc_ruby
+**************************************/
+ruby.mcrb[data-ruby] {
+	position: relative;
+	line-height: 1;
+	display: inline-block;
+}
+ruby.mcrb::before {
+	display:none;
+}
+ruby.mcrb[data-ruby]::after {
+	transform: translateY(0px) scale(0.5);
+	transform-origin: bottom center;
+	content: attr(data-ruby);
+	position: absolute;
+	display: inline-block;
+	line-height: 1;
+	text-align: center;
+	left: -6em;
+	right: -6em;
+	bottom: 100%;
+	white-space: nowrap;
+	text-indent: 0;
+}
+ruby.mcrb[data-ruby] rt {
+	display: none;
+}
+
+/* 縦書き用 */
+.vertical_text ruby.mcrb[data-ruby]::after,
+.log_body.vertical ruby.mcrb[data-ruby]::after {
+	transform: translateX(0px) scale(0.5);
+	transform-origin: left 50%;
+	top: -6em;
+	bottom: -6em;
+	left: 1em;
+	right: initial;
+}
+/* ログのルビ調整用 */
+.log_body.vertical ruby.mcrb[data-ruby]::after {
+	transform: translateX(0px) scale(0.5);
+}
+/** end mc_ruby ************************/
+
+
+/**************************************
+  backlog
+**************************************/
 .log_body {
+	padding: 0 15px 10px;
+	line-height:1.5;
 }
 
 /********* log line *********/
@@ -30,12 +84,16 @@
 .log_body .log .log_text {
   display: block;
 	box-sizing:border-box;
-	line-height:1.3;
+}
+.log_body .log .log_text span {
+	visibility: visible;
 }
 
 /********* chara name *********/
+/* 名前部分の幅 */
 .log_body .log .log_name{
-	width:15%;
+	width:8em;
+	display: flex;
 }
 .log_body .log.none .log_name{
 	visibility:hidden;
@@ -45,6 +103,7 @@
 }
 .log_body .log .log_name .chara_name{
   display: inline-block;
+	flex-grow: 3;
 }
 .log_body .log .log_name.name_none{
 	display:none;
@@ -54,12 +113,14 @@
 .log_body .log .log_line{
   display: inline-block;
   float: right;
+	margin: 0 0.2em;
 }
 
 /********* text *********/
 .log_body .log .log_text{
 	width:100%;
-}.log_body .log .log_name + .log_text{
+}
+.log_body .log .log_name + .log_text{
 	width:84%;
 }
 
@@ -74,8 +135,10 @@
     vertical
 ******************************************/
 .log_body.vertical {
-	margin:50px auto !important;
-  width: 85%;
+	margin: 30px auto !important;
+	width: 85%;
+	height: 500px;
+	padding: 10px 0 0 10px;
 }
 .log_body.vertical .log {
 	padding-top:0;
@@ -92,13 +155,14 @@
 }
 .log_body.vertical .log:first-child {
 	margin-right:0;
+	border-right: none;
 }
 .log_body.vertical .log:last-child {
-	border-left: 1px solid #ccc;
+	/*border-left: 1px solid #ccc;*/
 	padding-left:10px;
 }
 .log_body.vertical .log.none:first-child {
-	border-right: 1px solid #ccc;
+	/*border-right: 1px solid #ccc;*/
 }
 
 /********* chara name *********/
@@ -107,7 +171,9 @@
 	height:25%;
 	/*padding-top:5px;*/
 }
-
+.log_body.vertical .log .log_line{
+	margin: 0.2em 0;
+}
 /********* text *********/
 .log_body.vertical .log .log_text{
 	width:auto;
