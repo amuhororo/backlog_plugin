@@ -40,7 +40,7 @@ http://hororo.wp.xdomain.jp/118/
       name_none　　 true/false　　false      ログにキャラ名を入れない場合は true
       name_color    truefalse    false      [chara_new]タグで指定した色をバックログに反映させる場合は "true"
       glink_log　　 true/false　　false      [glink]の選択をログに表示。
-      glink_name  　文字列　　　　≪選択肢≫　 [glink]の名前部分
+      glink_name  　文字列　　　　≪選択!≫　 [glink]の名前部分
       mark        　文字列　　　　 ：         名前とテキストの間の記号※glinkには付きません
       vertical    　true/false　　false      バックログを縦書きにする場合は true
 　　
@@ -111,7 +111,7 @@ http://hororo.wp.xdomain.jp/118/
     [mc_ruby text=るび]ルビ[endruby]
 
   ◆注意点
-    エフェクトにも対応はさせていますが、ルビ自体にはエフェクトがかからないので動作は怪しいです。
+    ルビ自体にはエフェクトがかからないので、エフェクト使用は非推奨。
     公式の[ruby]はそのまま使えます。
 
 -------------------------------------------------------------------------------------------------
