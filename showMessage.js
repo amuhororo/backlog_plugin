@@ -1,4 +1,4 @@
-/* 【バックログプラグイン Ver.3.02】2021/02/11					*/
+/* 【バックログプラグイン Ver.3.03α】2021/02/14					*/
 /*	by hororo http://hororo.wp.xdomain.jp/118/			*/
 
 //■[showMessage]
@@ -30,7 +30,6 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 		}
 	}
 	*/
-
 	//--- ◆ バックログ ------------------------------------------------------------------
 	if(this.kag.stat.log_add == "true"){
 		that.kag.stat.log_join=="false";
@@ -159,7 +158,8 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 
 		var current_str = "";
 
-		if (jtext.find("p").find(".current_span").length != 0) {
+		/*
+		if (jtext.find("p").find(".current_span").length != 0){
 			jtext.find("p").find(".current_span").find("span").css({
 				"opacity":1,
 				"visibility":"visible",
@@ -167,6 +167,21 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 			});
 			current_str = jtext.find("p").find(".current_span").html();
 		}
+		*/
+		//--- ◆ nowait ---------------------------------------------------------------------
+		if (jtext.find("p").find(".current_span").length != 0){
+			jtext.find("p").find(".current_span").find("span").css({
+				//"opacity":1,
+				"visibility":"visible",
+				"animation":""
+			});
+			if(that.kag.tmp.backlog.nowait!="true"){
+				jtext.find("p").find(".current_span").find("span").css("opacity",1);
+			}
+			current_str = jtext.find("p").find(".current_span").html();
+		}
+		//--- ◆ end ------------------------------------------------------------------------
+
 		that.kag.checkMessage(jtext);
 
 		//メッセージ領域を取得
@@ -238,33 +253,6 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 			flag_in_block = false;
 		}
 
-		//--- ◆ テキスト高速表示モード追加プラグイン Ver2.74.01 ------------------------
-		//    Studio Overdrive http://studio-overdrive.com     //
-		/*
-		if(that.kag.tmp.backlog.nowait){
-			that.kag.stat.is_nowait = true;
-			if (that.kag.stat.is_click_text == true || that.kag.stat.is_skip != true && that.kag.stat.is_nowait == true) {
-				var str = message_str;
-				if (that.kag.tmp.backlog.ruby_str != "") {
-					str = "<ruby class='mcrb' data-ruby='"+that.kag.tmp.backlog.ruby_str+"'>" + message_str + "<rt>" + that.kag.tmp.backlog.ruby_str + "</rt></ruby>";
-				}else if(that.kag.stat.ruby_str != "") {
-					str = "<ruby><rb>" + message_str.substring(0, 1) + "</rb><rt><span>" + that.kag.stat.ruby_str + "</rt></ruby>" + message_str.substring(1, message_str.length);
-					that.kag.stat.ruby_str = ""
-				}
-				that.kag.pushBackLog(str,"join");
-				current_str += str;
-				that.kag.appendMessage(jtext, current_str);
-				that.kag.stat.is_adding_text = false;
-				that.kag.stat.is_click_text = false;
-				if (that.kag.stat.is_stop != "true"){
-					that.kag.ftag.nextOrder();
-				}
-				return;
-			}
-		}
-		*/
-		//--- ◆ end -------------------------------------------------------------------
-
 		var append_str = "";
 		var log_str = "";
 		for (var i = 0; i < message_str.length; i++) {
@@ -330,10 +318,13 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 		current_str += "<span class='str'>" + append_str + "</span>";
 		that.kag.appendMessage(jtext, current_str);
 		var append_span = j_span.find(".str").last();
+		//nowait
+		that.kag.stat.is_nowait = true;
+		if(that.kag.stat.is_nowait == true && that.kag.tmp.backlog.nowait!="true"){
+			//append_span.css({'visibility':'visible','opacity':'0'});
+		}
 		var makeVisible = function(index) {
-			if(that.kag.tmp.backlog.nowait=="true"){
-				append_span.find("span:eq(" + index + ")").css({'visibility':'visible','opacity':'0'});
-			}else if(that.kag.stat.font.effect!=""){
+			if(that.kag.stat.font.effect!=""){
 				append_span.find("span:eq(" + index + "),span:eq(" + index + ")+rt").on("animationend",function(e){
 					$(e.target).css({
 						"opacity":1,
@@ -348,7 +339,11 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 			}
 		};
 		var makeVisibleAll = function() {
-			append_span.find("span").css({'visibility':'visible','opacity':'1'});
+			if(that.kag.stat.is_nowait == true && that.kag.tmp.backlog.nowait == "true"){
+				append_span.css('opacity','0');
+			}else{
+				append_span.find("span").css({'visibility':'visible','opacity':'1'});
+			}
 		};
 		//--- ◆ end ---------------------------------------------------------------
 

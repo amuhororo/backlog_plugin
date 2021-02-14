@@ -1,4 +1,4 @@
-/* 【バックログプラグイン Ver.3.02】2021/02/11					*/
+/* 【バックログプラグイン Ver.3.03α】2021/02/14					*/
 /*	by hororo http://hororo.wp.xdomain.jp/118/			*/
 
 
@@ -87,11 +87,15 @@ tyrano.plugin.kag.tag.resetfont.start = function() {
 	this.kag.ftag.nextOrder();
 };
 
+
 //■[p]
 tyrano.plugin.kag.tag.p.start = function() {
 
 	//--- ◆ バックログ処理 ----------------------------------------------------------
 	this.kag.stat.log_add="true";
+	//--- ◆ nowait処理 ----------------------------------------------------------
+	var messagelayer = this.kag.getMessageInnerLayer();
+	messagelayer.find("span").css({'opacity':'1'});
 	//--- ◆ end --------------------------------------------------------------------
 
 	var that = this;
@@ -118,6 +122,7 @@ tyrano.plugin.kag.tag.p.start = function() {
 	}
 };
 
+
 //■[r]
 tyrano.plugin.kag.tag.r.start = function() {
 
@@ -134,6 +139,7 @@ tyrano.plugin.kag.tag.r.start = function() {
 	},5);
 };
 
+
 //■[er]
 tyrano.plugin.kag.tag.er.start = function() {
 
@@ -145,6 +151,7 @@ tyrano.plugin.kag.tag.er.start = function() {
 	this.kag.getMessageInnerLayer().html("");
 	this.kag.ftag.startTag("resetfont");
 };
+
 
 //■[cm]
 tyrano.plugin.kag.tag.cm.start = function() {
@@ -164,6 +171,7 @@ tyrano.plugin.kag.tag.cm.start = function() {
 	this.kag.ftag.startTag("resetfont");
 };
 
+
 //■[ct]
 tyrano.plugin.kag.tag.ct.start = function() {
 
@@ -178,6 +186,7 @@ tyrano.plugin.kag.tag.ct.start = function() {
 	this.kag.stat.current_page = "fore";
 	this.kag.ftag.startTag("resetfont");
 };
+
 
 //■[glink]
 tyrano.plugin.kag.tag.glink.setEvent = function(j_button,pm){

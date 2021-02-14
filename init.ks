@@ -1,5 +1,5 @@
-;【バックログプラグイン Ver.3.02】
-; 2021/02/11更新  v506e対応版
+;【バックログプラグイン Ver.3.03α】
+; 2021/02/14更新  v506e対応版
 ; by hororo hororo http://hororo.wp.xdomain.jp/118/
 
 [iscript]
@@ -13,7 +13,7 @@ TG.kag.tmp.backlog = {
 	glink_name  : mp.glink_name  || "≪選択!≫",     //[glink]の名前部分
 	mark        : mp.mark        || "：",            //名前とテキストの間の記号
 	vertical    : mp.vertical    || "false",         //バックログを縦書きにする場合は "true"
-
+	nowait      : mp.nowait      || "true",          //nowaitを瞬間表示にする
 
 
 
@@ -24,6 +24,7 @@ TG.kag.tmp.backlog = {
 [endscript]
 [loadjs storage="plugin/backlog/showMessage.js"]
 [loadjs storage="plugin/backlog/kag.tag.js"]
+[loadjs storage="plugin/backlog/nowait.js"]
 [loadcss file="./data/others/plugin/backlog/backlog.css" ]
 
 
@@ -37,6 +38,5 @@ TG.kag.tmp.backlog = {
 		TG.kag.tmp.backlog.ruby_str = "";
 	[endscript]
 [endmacro]
-
 
 [return]
