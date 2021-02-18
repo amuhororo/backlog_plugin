@@ -206,5 +206,5 @@ ruby.mcrb[data-ruby] rt {
 }
 .save_list .log_name .chara_name,
 .save_list .log_text .text {
-  all: initial !important;
+	color: unset !important;
 }
