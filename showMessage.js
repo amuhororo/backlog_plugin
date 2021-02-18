@@ -1,4 +1,4 @@
-/* 【バックログプラグイン Ver.3.03α】2021/02/14					*/
+/* 【バックログプラグイン Ver.3.03】2021/02/18					*/
 /*	by hororo http://hororo.wp.xdomain.jp/118/			*/
 
 //■[showMessage]
@@ -30,7 +30,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 		}
 	}
 	*/
-	//--- ◆ バックログ ------------------------------------------------------------------
+//--- ◆ バックログ ------------------------------------------------------------------
 	if(this.kag.stat.log_add == "true"){
 		that.kag.stat.log_join=="false";
 		pm.backlog="add";
@@ -121,19 +121,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 
 	//メッセージ部分のタグをログ保存 </span>は削除
 	this.kag.pushBackLog(log_style.get(0).outerHTML.slice( 0, -7 ),"join");
-
-	//キャラ名フラグ管理
-	/*
-	if((chara_name != "" && pm.backlog!="join") || (chara_name!="" && this.kag.stat.f_chara_ptext=="true")){
-		if(this.kag.stat.f_chara_ptext=="true"){
-			this.kag.stat.f_chara_ptext="false";
-			this.kag.stat.log_join = "true";
-		}
-	}else{
-		//this.kag.tmp.backlog.name_count ++;
-	}
-	*/
-	//--- ◆ end ------------------------------------------------------------------------
+//--- ◆ end ------------------------------------------------------------------------
 
 
 	if(that.kag.stat.play_speak==true){
@@ -176,7 +164,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 				"animation":""
 			});
 			if(that.kag.tmp.backlog.nowait!="true"){
-				jtext.find("p").find(".current_span").find("span").css("opacity",1);
+				jtext.find("p").find(".current_span").find("span").css("opacity",1);  //瞬間表示以外の時だけ表示
 			}
 			current_str = jtext.find("p").find(".current_span").html();
 		}
@@ -318,11 +306,6 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 		current_str += "<span class='str'>" + append_str + "</span>";
 		that.kag.appendMessage(jtext, current_str);
 		var append_span = j_span.find(".str").last();
-		//nowait
-		that.kag.stat.is_nowait = true;
-		if(that.kag.stat.is_nowait == true && that.kag.tmp.backlog.nowait!="true"){
-			//append_span.css({'visibility':'visible','opacity':'0'});
-		}
 		var makeVisible = function(index) {
 			if(that.kag.stat.font.effect!=""){
 				append_span.find("span:eq(" + index + "),span:eq(" + index + ")+rt").on("animationend",function(e){
@@ -340,7 +323,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 		};
 		var makeVisibleAll = function() {
 			if(that.kag.stat.is_nowait == true && that.kag.tmp.backlog.nowait == "true"){
-				append_span.css('opacity','0');
+				append_span.css('opacity','0'); //瞬間表示の場合はまだ表示しない
 			}else{
 				append_span.find("span").css({'visibility':'visible','opacity':'1'});
 			}

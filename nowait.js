@@ -1,11 +1,10 @@
-/* 【バックログプラグイン Ver.3.03α】2021/02/14					*/
+/* 【バックログプラグイン Ver.3.03】2021/02/18					*/
 /*	by hororo http://hororo.wp.xdomain.jp/118/			*/
 
 //■[s]
 tyrano.plugin.kag.tag.s.start = function() {
 	//--- ◆ nowait処理 ----------------------------------------------------------
-	var messagelayer = this.kag.getMessageInnerLayer();
-	messagelayer.find("span").css({'opacity':'1'});
+	this.kag.getMessageInnerLayer().find("span").css({'opacity':'1'});
 	//--- ◆ end --------------------------------------------------------------------
 
 	this.kag.stat.is_strong_stop = true;
@@ -18,8 +17,7 @@ tyrano.plugin.kag.tag.l.start = function() {
 	var that = this;
 
 	//--- ◆ nowait処理 ----------------------------------------------------------
-	var messagelayer = that.kag.getMessageInnerLayer();
-	messagelayer.find("span").css({'opacity':'1'});
+	this.kag.getMessageInnerLayer().find("span").css({'opacity':'1'});
 	//--- ◆ end --------------------------------------------------------------------
 
 	this.kag.ftag.showNextImg();
