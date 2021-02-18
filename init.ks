@@ -1,4 +1,4 @@
-;【バックログプラグイン Ver.3.03】
+;【バックログプラグイン Ver.3.10】
 ; 2021/02/18更新  v506e対応版
 ; by hororo hororo http://hororo.wp.xdomain.jp/118/
 
