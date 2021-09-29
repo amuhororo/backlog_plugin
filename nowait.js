@@ -1,5 +1,15 @@
-/* 【バックログプラグイン Ver.3.10】2021/02/18					*/
-/*	by hororo http://hororo.wp.xdomain.jp/118/			*/
+/* 【バックログプラグイン Ver.3.11】2021/09/30       */
+/* by hororo http://hororo.wp.xdomain.jp/118/       */
+
+
+tyrano.plugin.kag.tag.endnowait.start = function(pm) {
+	//--- ◆ nowait処理 ----------------------------------------------------------
+	this.kag.getMessageInnerLayer().find("span").css({'opacity':'1'});
+	//--- ◆ end --------------------------------------------------------------------
+
+	this.kag.stat.is_nowait = false;
+	this.kag.ftag.nextOrder();
+};
 
 //■[s]
 tyrano.plugin.kag.tag.s.start = function() {

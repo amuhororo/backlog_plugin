@@ -1,5 +1,5 @@
-;【バックログプラグイン Ver.3.10】
-; 2021/02/18更新  v506e対応版
+;【バックログプラグイン Ver.3.11】
+; 2021/09/30更新  v510h対応版
 ; by hororo hororo http://hororo.wp.xdomain.jp/118/
 
 [iscript]

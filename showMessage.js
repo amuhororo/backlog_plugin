@@ -1,5 +1,5 @@
-/* 【バックログプラグイン Ver.3.10】2021/02/18					*/
-/*	by hororo http://hororo.wp.xdomain.jp/118/			*/
+/* 【バックログプラグイン Ver.3.11】2021/09/30       */
+/* by hororo http://hororo.wp.xdomain.jp/118/       */
 
 //■[showMessage]
 tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
@@ -11,7 +11,12 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 
 	var chara_name = "";
 	if(this.kag.stat.chara_ptext!=""){
-		chara_name = $.isNull($("." + this.kag.stat.chara_ptext).html());
+		const layer = "." + this.kag.stat.current_layer + "_fore";
+		if($(layer).find("." + this.kag.stat.chara_ptext).html() == null){
+			chara_name = $.isNull($("." + this.kag.stat.chara_ptext).html());
+		}else{
+			chara_name = $.isNull($(layer).find("." + this.kag.stat.chara_ptext).html());
+		}
 	}
 
 	/*
@@ -60,7 +65,8 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 	var classnone = "";
 	if(array_log_name == chara_name && this.kag.tmp.backlog.name_repeat == "false") classnone = " none";
 	if(this.kag.tmp.backlog.name_none == "false"){
-		var log = "<dt class='log_name "+c_name+classnone+"'><span class='chara_name'"+name_color+">"+chara_name+"</span><span class='log_line'>"+this.kag.tmp.backlog.mark+"</span>";
+		//var log = "<dt class='log_name "+c_name+classnone+"'><span class='chara_name'"+name_color+">"+chara_name+"</span><span class='log_line'>"+this.kag.tmp.backlog.mark+"</span>";
+		var log = "<dt class='log_name "+c_name+classnone+"'><span class='chara_name'"+name_color+">"+chara_name+"</span>";
 	}else{
 		var log = "<dt class='name_none'>";
 	}
@@ -70,8 +76,10 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 	if(pm.backlog!="join" || this.kag.stat.log_join == "false" || this.kag.stat.f_chara_ptext=="true"){
 		this.kag.pushBackLog(log+"</dt><dd class='log_text "+c_name+"'>","add");
 		if(this.kag.stat.f_chara_ptext=="true") this.kag.stat.f_chara_ptext="false";
-		this.kag.stat.log_join = "true";
-		this.kag.stat.log_add = "false";
+		if(this.kag.stat.log_write){
+			this.kag.stat.log_join = "true";
+			this.kag.stat.log_add = "false";
+		}
 	}
 
 	////メッセージ////
@@ -82,10 +90,11 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 	if(this.kag.variable.tf.system.tip_conf!=undefined){
 		var tip_conf = this.kag.variable.tf.system.tip_conf;
 		if(tip_conf.tiplog_name){
-			log_span = "<span class='text" + tip_conf.tiplog_name + "'" + tip_conf.tiplog_key + tip_conf.tiplog_obj+"></span>";
+			log_span = "<span class='text" + tip_conf.tiplog_name + "'" + tip_conf.tiplog_key + tip_conf.tiplog_obj + tip_conf.tiplog_onClick+"></span>";
 			tip_conf.tiplog_name = "";
 			tip_conf.tiplog_key = "";
 			tip_conf.tiplog_obj = "";
+			tip_conf.tiplog_onClick = "";
 			tip_flag = true;
 		}
 	}
@@ -121,6 +130,7 @@ tyrano.plugin.kag.tag.text.showMessage = function(message_str,pm,isVertical) {
 
 	//メッセージ部分のタグをログ保存 </span>は削除
 	this.kag.pushBackLog(log_style.get(0).outerHTML.slice( 0, -7 ),"join");
+
 //--- ◆ end ------------------------------------------------------------------------
 
 

@@ -1,6 +1,5 @@
-/* 【バックログプラグイン Ver.3.10】2021/02/18					*/
-/*	by hororo http://hororo.wp.xdomain.jp/118/			*/
-
+/* 【バックログプラグイン Ver.3.11】2021/09/30       */
+/* by hororo http://hororo.wp.xdomain.jp/118/       */
 
 //■[font]
 tyrano.plugin.kag.tag.font.start = function(pm) {
@@ -335,7 +334,7 @@ tyrano.plugin.kag.menu.displayLog = function() {
 			//log_str += array_log[i] + "<br />";
 
 			//--- ◆ ログ書き出し -------------------------------------------------------
-			if(array_log[i].includes("script") && !array_log[i].includes("span")){
+			if(array_log[i].slice( 0, 7)=="<script" && array_log[i].slice( -9)=="</script>"){
 				log_str += array_log[i];
 			} else {
 				log_str += "<dl class='log'>" + array_log[i] + "</dl>";
@@ -351,7 +350,8 @@ tyrano.plugin.kag.menu.displayLog = function() {
 		if(that.kag.tmp.backlog.def_style == "true"){
 			var line_height = parseInt(that.kag.stat.default_font.size) + (parseInt(that.kag.config.defaultLineSpacing)*1.5);
 			line_height = parseInt(line_height) / parseInt(that.kag.stat.default_font.size);
-			/*var weight = "normal";
+			/*
+			var weight = "normal";
 			if(!that.kag.stat.default_font.bold) weight = $.convertBold(that.kag.stat.default_font.bold);
 			*/
 			$(".log_body").css({
@@ -369,9 +369,11 @@ tyrano.plugin.kag.menu.displayLog = function() {
 				$(".log_body").css("text-shadow","2px 2px 2px "+that.kag.stat.default_font.shadow);
 			}
 		};
-		//--- class=none があれば追加
-		$(".log_body .log:has(dt.none)").addClass("none");
-		$(".log_body .log:has(dt.glink)").addClass("glink");
+		//--- clas追加
+		$(".log_body .log").has(".none").addClass("none");
+		$(".log_body .log").has(".glink").addClass("glink");
+		$(".log_body .log").has("dt").addClass("flex");
+		$(".log_body .log .log_name").attr('data-mark', that.kag.tmp.backlog.mark);
 		//--- ◆ end ----------------------------------------------------------------------
 
 		//--- ◆ 縦書き用 ------------------------------------------------------------------
@@ -387,7 +389,7 @@ tyrano.plugin.kag.menu.displayLog = function() {
 			var mousewheelevent = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
 			$(document).on(mousewheelevent,function(e){
 				var num = $(".log_body").scrollLeft();
-				//e.preventDefault();
+				e.preventDefault();
 				var delta = e.originalEvent.deltaY ? -(e.originalEvent.deltaY) : e.originalEvent.wheelDelta ? e.originalEvent.wheelDelta : -(e.originalEvent.detail);
 				if (delta < 0){
 					var num = num - 60;
@@ -409,13 +411,13 @@ tyrano.plugin.kag.menu.displayLog = function() {
 				layer_menu.find(".log_body").scrollTop(9999999999);
 			};
 		},that);
-				//--- ◆ end ----------------------------------------------------------------------
+		//--- ◆ end ----------------------------------------------------------------------
 
-				//$.preloadImgCallback(layer_menu,function(){
-						//layer_menu.fadeIn(300);
-						//一番下固定させる
-						//layer_menu.find(".log_body").scrollTop(9999999999);
-				//},that);
+		//$.preloadImgCallback(layer_menu,function(){
+			//layer_menu.fadeIn(300);
+			//一番下固定させる
+			//layer_menu.find(".log_body").scrollTop(9999999999);
+		//},that);
 
 		$(".button_menu").hide();
 	});

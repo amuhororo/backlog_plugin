@@ -1,8 +1,11 @@
-/* 【バックログプラグイン Ver.3.10】2021/02/18					*/
-/*	by hororo http://hororo.wp.xdomain.jp/118/			*/
+/* 【バックログプラグイン Ver.3.11】2021/09/30       */
+/* by hororo http://hororo.wp.xdomain.jp/118/       */
 
 @charset "utf-8";
-* { box-sizing: border-box; }
+*,*:before,*:after {
+  box-sizing: inherit;
+}
+.log_body { box-sizing: border-box; }
 
 /**************************************
   mc_ruby
@@ -57,14 +60,18 @@ ruby.mcrb[data-ruby] rt {
 	padding: 0 15px 10px;
 	line-height:1.5;
 }
-
+.log_body .log > span {
+	display:inline;
+}
 /********* log line *********/
 .log_body .log {
-  display:flex;
 	padding-top:10px;
 	margin-top:10px;
 	border-top: 1px solid #ccc;
 	box-sizing:border-box;
+}
+.log_body .log.flex {
+  display:flex;
 }
 
 /* 繰り返しテキストは線・余白なし */
@@ -102,7 +109,7 @@ ruby.mcrb[data-ruby] rt {
 	visibility:visible;
 }
 .log_body .log .log_name .chara_name{
-  display: inline-block;
+	display: inline-block;
 	flex-grow: 3;
 }
 .log_body .log .log_name.name_none{
@@ -110,10 +117,15 @@ ruby.mcrb[data-ruby] rt {
 }
 
 /********* mark *********/
+/*
 .log_body .log .log_line{
-  display: inline-block;
-  float: right;
+	display: inline-block;
+	float: right;
 	margin: 0 0.2em;
+}
+*/
+.log_body .log .log_name::after{
+	content: attr(data-mark);
 }
 
 /********* text *********/
@@ -207,4 +219,8 @@ ruby.mcrb[data-ruby] rt {
 .save_list .log_name .chara_name,
 .save_list .log_text .text {
 	color: unset !important;
+}
+
+.message_inner {
+  box-sizing: content-box;
 }
