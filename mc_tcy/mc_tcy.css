@@ -1,0 +1,9 @@
+/*【縦中横プラグイン】   */
+/* by hororo https://memocho.no-tenki.me/ */
+
+tcy {
+	-webkit-text-combine: horizontal;
+	-ms-text-combine-horizontal: all;
+	text-combine-upright: all;
+	display: inline-block;
+}
