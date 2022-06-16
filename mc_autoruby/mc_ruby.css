@@ -1,0 +1,51 @@
+/*【ルビをバックログに入れるプラグイン】   */
+/* by hororo https://memocho.no-tenki.me/ */
+
+.mc_ruby {
+	position: relative;
+	display: inline-block;
+	line-height: 1;
+}
+.mc_ruby[data-ruby]::after {
+	transform: translateY(0px) scale(0.5);
+	transform-origin: bottom center;
+	content: attr(data-ruby);
+	position: absolute;
+	display: inline-block;
+	line-height: 1;
+	text-align: center;
+	left: -10em;
+	right: -10em;
+	bottom: 100%; /* 横書き時の上下位置調整はここ */
+	white-space: nowrap;
+	text-indent: 0;
+}
+.mc_ruby::before {
+	display:none;
+}
+
+
+/* 縦書き用 */
+.vertical_text .mc_ruby {
+}
+.vertical_text .mc_ruby[data-ruby]::after{
+	transform: translateX(0px) scale(0.5);
+	transform-origin: left 50%;
+	top: -10em;
+	bottom: -10em;
+	left: 100%; /* 縦書き時の左右位置調整はここ */
+	right: initial;
+}
+
+
+/* ログの調整 */
+.log_body .mc_ruby {
+}
+.log_body .mc_ruby[data-ruby]::after {
+	bottom: 100%; /* 横書き時の上下位置調整はここ */
+}
+.log_body.vertical .mc_ruby {
+}
+.log_body.vertical .mc_ruby[data-ruby]::after {
+	left: 100%; /* 縦書き時の左右位置調整はここ */
+}
