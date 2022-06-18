@@ -1,61 +1,29 @@
-/*【ルビをバックログに入れるプラグイン】   */
+/*【自動でルビを入れるプラグイン】         */
 /* by hororo https://memocho.no-tenki.me/ */
-/*
-.mc_ruby {
-	position: relative;
-	display: inline-block;
-	line-height: 1;
-}
-.mc_ruby[data-ruby]::after {
-	transform: translateY(0px) scale(0.5);
-	transform-origin: bottom center;
-	content: attr(data-ruby);
-	position: absolute;
-	display: inline-block;
-	line-height: 1;
-	text-align: center;
-	left: -10em;
-	right: -10em;
-	bottom: 100%;
-	white-space: nowrap;
-	text-indent: 0;
-}
-.mc_ruby::before {
-	display:none;
-}
-*/
 
-/* 縦書き用 */
-/*
-.vertical_text .mc_ruby {
-}
-.vertical_text .mc_ruby[data-ruby]::after{
-	transform: translateX(0px) scale(0.5);
-	transform-origin: left 50%;
-	top: -10em;
-	bottom: -10em;
-	left: 100%;
-	right: initial;
-}
-*/
 
 /* メッセージ */
 .message_inner .mc_ruby.auto {
-	width: auto;
-	height: calc(1em - 3px);
+}
+.message_inner .mc_ruby.auto[data-ruby]::after {
 }
 .message_inner .vertical_text .mc_ruby.auto {
-	height: auto;
-	width: calc(1em - 1px);
+	writing-mode: initial;
+}
+.message_inner .vertical_text .mc_ruby.auto[data-ruby]::after {
+	writing-mode: vertical-rl;
+	left: calc(1em);
 }
 
-/* ptext */
-p > .mc_ruby.auto {
+
+/* キャラ名 */
+.chara_name_area.mc_ruby.auto {
 }
-p.vertical_text > .mc_ruby.auto {
+.chara_name_area.mc_ruby.auto[data-ruby]::after {
+	bottom: calc(1em + 0.4em);
 }
 
-/* glink */
+/* glink調整 */
 .glink_button {
 	padding-top: .7em;
 }
@@ -64,14 +32,16 @@ p.vertical_text > .mc_ruby.auto {
 	padding-right: .7em;
 }
 
-/* ログの調整 */
-.log_body .mc_ruby.auto {
+
+/* ptext調整 */
+p > .mc_ruby.auto {
 }
-.log_body .mc_ruby.auto[data-ruby]::after {
-	/* bottom: 100%; 横書き時の上下位置調整はここ */
+p.vertical_text > .mc_ruby.auto {
 }
-.log_body.vertical .mc_ruby.auto {
-}
-.log_body.vertical .mc_ruby.auto[data-ruby]::after {
-	/* left: 100%; 縦書き時の左右位置調整はここ */
+
+
+/* 多重登録非表示 */
+.log_body ruby ruby.mc_ruby[data-ruby]::after,
+.message_inner ruby + ruby.mc_ruby {
+	display:none;
 }
