@@ -9,8 +9,21 @@
 	TYRANO.kag.stat.memocho = TYRANO.kag.stat.memocho || {}; //memocho専用領域
 	TYRANO.kag.stat.memocho.log = TYRANO.kag.stat.memocho.log || {};
 	TYRANO.kag.stat.memocho.log.font = {};
-	TYRANO.kag.tmp.memocho = TYRANO.kag.tmp.memocho || {};
-	TYRANO.kag.tmp.memocho.log = TYRANO.kag.tmp.memocho.log || {};
+
+
+	//ログ用スタイル
+	const font_style = function() {
+		let style = '';
+		if(TYRANO.kag.stat.memocho.log.font.size) style += 'font-size:' + TYRANO.kag.stat.memocho.log.font.size + 'px;';
+		if(TYRANO.kag.stat.memocho.log.font.color) style += 'color:' + TYRANO.kag.stat.memocho.log.font.color + ';';
+		if(TYRANO.kag.stat.memocho.log.font.bold) style += 'font-weight:' + TYRANO.kag.stat.memocho.log.font.bold + ';';
+		if(TYRANO.kag.stat.memocho.log.font.face) style += 'font-family:' + TYRANO.kag.stat.memocho.log.font.face + ';';
+		if(TYRANO.kag.stat.memocho.log.font.italic) style += 'font-style:' + TYRANO.kag.stat.memocho.log.font.italic + ';';
+		if(TYRANO.kag.stat.memocho.log.font.shadow ) style += 'text-shadow:' + TYRANO.kag.stat.memocho.log.font.shadow + ';';
+		if(style.length) style = " style='" + style + "'";
+		TYRANO.kag.stat.memocho.log.font.style = style;
+	}
+
 
 	//mc_fontタグ
 	tag.mc_font = {
@@ -18,42 +31,66 @@
 		start : function(pm) {
 			let style = '';
 			let name = ''
-			if(pm.size) style += 'font-size:' + pm.size + 'px;';
-			if(pm.color) style += 'color:' + $.convertColor(pm.color) + ';';
-			if(pm.bold) style += 'font-weight:' + $.convertBold(pm.bold) + ';';
-			if(pm.face) style += 'font-family:' + pm.face + ';';
-			if(pm.italic) style += 'font-style:' + $.convertItalic(pm.italic) + ';';
+
+			//パラメータ保存
+			if(pm.size) TYRANO.kag.stat.memocho.log.font.size = pm.size;
+			if(pm.color) TYRANO.kag.stat.memocho.log.font.color = $.convertColor(pm.color);
+			if(pm.bold) TYRANO.kag.stat.memocho.log.font.bold = $.convertBold(pm.bold);
+			if(pm.face) TYRANO.kag.stat.memocho.log.font.face = pm.face;
+			if(pm.italic) TYRANO.kag.stat.memocho.log.font.italic = $.convertItalic(pm.italic);
 			if(pm.edge){
 				const edge = $.convertColor(pm.edge);
-				style += 'text-shadow:' + "1px 1px 0 " + edge + ", -1px 1px 0 " + edge + ",1px -1px 0 " + edge + ",-1px -1px 0 " + edge + ";";
+				TYRANO.kag.stat.memocho.log.font.shadow = "1px 1px 0 " + edge + ", -1px 1px 0 " + edge + ",1px -1px 0 " + edge + ",-1px -1px 0 " + edge;
 			}
-			if(pm.shadow){
-				style += 'text-shadow:' + "2px 2px 2px " + $.convertColor(pm.shadow) + ';';
+			if(pm.shadow) TYRANO.kag.stat.memocho.log.font.shadow = "2px 2px 2px " + $.convertColor(pm.shadow);
+			if(pm.effect) {
+				if(pm.effect == "none") TYRANO.kag.stat.memocho.log.font.effect = "";
+				else TYRANO.kag.stat.memocho.log.font.effect = pm.effect;
 			}
+			if(pm.effect_speed) TYRANO.kag.stat.memocho.log.font.effect_speed = pm.effect_speed;
+
+			//スタイル文字列作成
+			font_style();
+
+			//fontタグ実行
+			TYRANO.kag.ftag.startTag("font",pm);
+
+			//nameを追加
 			if(pm.name){
 				$.setName($(".current_span"), pm.name);
 				name = ' ' + pm.name.replace(/,/g," ");
 			}
-			if(style.length) style = " style='" + style + "'";
-			TYRANO.kag.stat.memocho.log.font.style = style;
 			TYRANO.kag.stat.memocho.log.font.name = name;
-			//let last_log = TYRANO.kag.variable.tf.system.backlog.pop();
-			//console.log("ログ1",last_log);
-			//last_log = last_log.replace(/(.*)<span/,"$1<span" + style).replace(/(.*)\'>/,"$1" + name + "'>");
-			//last_log = last_log.replace(/(.*)<span(.*)\'>/,"$1<span" + style + "$2" + name + "'>");
-			//TYRANO.kag.pushBackLog(last_log,"add");
-			//console.log("ログ2",last_log);
-			TYRANO.kag.ftag.startTag("font",pm);
 		}
 	}
 
 	tag.mc_resetfont = {
 		log_join: "true",
 		start : function(pm) {
-			//ログ
-			TYRANO.kag.stat.memocho.log.font = {};
+			//ログ用クリア
+			if(Object.keys(pm).length == 1){
+				TYRANO.kag.stat.memocho.log.font = {};
+			}else{
+				//パラメータがある分だけクリア
+				Object.keys(pm).forEach(function (key){
+					TYRANO.kag.stat.memocho.log.font[key] = "";
+				});
+				font_style(); //ログ用スタイル
+			}
+
 			//[resetfont]
 			TYRANO.kag.ftag.startTag("resetfont",{});
+
+			//フォント再指定
+			Object.keys(TYRANO.kag.stat.memocho.log.font).forEach(function (key){
+				if(key != "name" && key != "_tag" && key != "style"){
+					if(!TYRANO.kag.stat.memocho.log.font[key]){
+						TYRANO.kag.stat.font[key] = TYRANO.kag.stat.default_font[key];
+					}else{
+						TYRANO.kag.stat.font[key] = TYRANO.kag.stat.memocho.log.font[key];
+					}
+				}
+			});
 		}
 	}
 
@@ -89,14 +126,23 @@
 		}
 
 		/////改造////////////////////////////////////////////////////
-		//font反映
+		//fontをログに反映
 		if(TYRANO.kag.stat.memocho.log.font){
 			if(str.indexOf("backlog_text") > -1){
 				const style = TYRANO.kag.stat.memocho.log.font.style || "";
-				const name = TYRANO.kag.stat.memocho.log.font.name || "";
+				let name = TYRANO.kag.stat.memocho.log.font.name || "";
+				name = ' ' + name.replace(/,/g," ");
 				//str = str.replace(/(.*)<span(.*)\'>/,"$1<span" + style + "$2" + name + "'>");
 				str = str.replace(/(.*)class=(.*)\'>/,"$1" + style + "class=" + name + "$2'>");
 				//console.log("pushBackLog：",str,TYRANO.kag.stat.memocho.log.font,this.variable.tf.system.backlog);
+			}
+		}
+		//メッセージエリアへname反映
+		if(TYRANO.kag.stat.memocho.log.font.name){
+			const isLayer = TYRANO.kag.getMessageInnerLayer();
+			if (isLayer.find("p").find(".current_span").length == 0) {
+				//current_spanが無かったら新しく作っとく
+				$.setName(TYRANO.kag.setMessageCurrentSpan(), TYRANO.kag.stat.memocho.log.font.name);
 			}
 		}
 		/////改造////////////////////////////////////////////////////
@@ -118,7 +164,8 @@
 		}
 
 		//セーブ用のテキストファイルを保存
-		this.stat.current_save_str = this.variable.tf["system"]["backlog"][this.variable.tf.system.backlog.length - 1];
+		//this.stat.current_save_str = this.variable.tf["system"]["backlog"][this.variable.tf.system.backlog.length - 1];
+		this.stat.current_save_str = this.variable.tf["system"]["backlog"][index];
 
 		//上限を超えたらFILO で処理
 		if (max_back_log < this.variable.tf["system"]["backlog"].length) {
