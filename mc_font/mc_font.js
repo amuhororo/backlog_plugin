@@ -10,18 +10,53 @@
 	TYRANO.kag.stat.memocho.log = TYRANO.kag.stat.memocho.log || {};
 	TYRANO.kag.stat.memocho.log.font = {};
 
+	//パラメータ保存
+	TYRANO.kag.tmp.memocho = TYRANO.kag.tmp.memocho || {};
+	TYRANO.kag.tmp.memocho.log = TYRANO.kag.tmp.memocho.log || {};
+	TYRANO.kag.tmp.memocho.log.save_text = TYRANO.kag.stat.mp.save_text || "false";
 
-	//ログ用スタイル
-	const font_style = function() {
-		let style = '';
-		if(TYRANO.kag.stat.memocho.log.font.size) style += 'font-size:' + TYRANO.kag.stat.memocho.log.font.size + 'px;';
+
+	//スタイル
+	const font_style = function(current) {
+		let style = "";
+
+		let font = TYRANO.kag.stat.memocho.log.font;
+		if(current) font = TYRANO.kag.stat.font; //currentはmc_resetfontで戻す用
+
+		if(font.size) style += "font-size:" + font.size + "px;";
+		if(font.color) style += "color:" + font.color + ";";
+		if(font.bold) style += "font-weight:" + font.bold + ";";
+		if(font.face) style += "font-family:" + font.face + ";";
+		if(font.italic) style += "font-style:" + font.italic + ";";
+		if(font.edge){
+			const edge = "1px 1px 0 " + font.edge + ", -1px 1px 0 " + font.edge + ",1px -1px 0 " + font.edge + ",-1px -1px 0 " + font.edge;
+			style += "text-shadow:" + edge + ";";
+		}
+		else if(font.shadow) style += "text-shadow:" + "2px 2px 2px " + font.shadow + ";";
+
+		if(style.length){
+			if(current){
+				return style;
+			}else{
+				style = " style='" + style + "'";
+				TYRANO.kag.stat.memocho.log.font.style = style;
+			}
+		}
+
+/*
+		if(TYRANO.kag.stat.memocho.log.font.size){
+			style += 'font-size:' + TYRANO.kag.stat.memocho.log.font.size + 'px;';
+		}
 		if(TYRANO.kag.stat.memocho.log.font.color) style += 'color:' + TYRANO.kag.stat.memocho.log.font.color + ';';
 		if(TYRANO.kag.stat.memocho.log.font.bold) style += 'font-weight:' + TYRANO.kag.stat.memocho.log.font.bold + ';';
 		if(TYRANO.kag.stat.memocho.log.font.face) style += 'font-family:' + TYRANO.kag.stat.memocho.log.font.face + ';';
 		if(TYRANO.kag.stat.memocho.log.font.italic) style += 'font-style:' + TYRANO.kag.stat.memocho.log.font.italic + ';';
 		if(TYRANO.kag.stat.memocho.log.font.shadow ) style += 'text-shadow:' + TYRANO.kag.stat.memocho.log.font.shadow + ';';
-		if(style.length) style = " style='" + style + "'";
-		TYRANO.kag.stat.memocho.log.font.style = style;
+		if(style.length){
+			style = " style='" + style + "'";
+			TYRANO.kag.stat.memocho.log.font.style = style;
+		}
+*/
 	}
 
 
@@ -29,8 +64,6 @@
 	tag.mc_font = {
 		log_join: "true",
 		start : function(pm) {
-			let style = '';
-			let name = ''
 
 			//パラメータ保存
 			if(pm.size) TYRANO.kag.stat.memocho.log.font.size = pm.size;
@@ -38,29 +71,27 @@
 			if(pm.bold) TYRANO.kag.stat.memocho.log.font.bold = $.convertBold(pm.bold);
 			if(pm.face) TYRANO.kag.stat.memocho.log.font.face = pm.face;
 			if(pm.italic) TYRANO.kag.stat.memocho.log.font.italic = $.convertItalic(pm.italic);
-			if(pm.edge){
-				const edge = $.convertColor(pm.edge);
-				TYRANO.kag.stat.memocho.log.font.shadow = "1px 1px 0 " + edge + ", -1px 1px 0 " + edge + ",1px -1px 0 " + edge + ",-1px -1px 0 " + edge;
-			}
-			if(pm.shadow) TYRANO.kag.stat.memocho.log.font.shadow = "2px 2px 2px " + $.convertColor(pm.shadow);
-			if(pm.effect) {
+			if(pm.edge) TYRANO.kag.stat.memocho.log.font.edge = $.convertColor(pm.edge);
+			if(pm.shadow) TYRANO.kag.stat.memocho.log.font.shadow = $.convertColor(pm.shadow);
+			if(pm.effect){
 				if(pm.effect == "none") TYRANO.kag.stat.memocho.log.font.effect = "";
 				else TYRANO.kag.stat.memocho.log.font.effect = pm.effect;
 			}
 			if(pm.effect_speed) TYRANO.kag.stat.memocho.log.font.effect_speed = pm.effect_speed;
 
-			//スタイル文字列作成
+			//ログ用スタイル文字列作成
 			font_style();
 
-			//fontタグ実行
+			//[font]タグ実行
 			TYRANO.kag.ftag.startTag("font",pm);
 
 			//nameを追加
+			//let name = ""
 			if(pm.name){
 				$.setName($(".current_span"), pm.name);
-				name = ' ' + pm.name.replace(/,/g," ");
+				TYRANO.kag.stat.memocho.log.font.name = " " + pm.name.replace(/,/g," ");
 			}
-			TYRANO.kag.stat.memocho.log.font.name = name;
+			//TYRANO.kag.stat.memocho.log.font.name = name;
 		}
 	}
 
@@ -91,6 +122,9 @@
 					}
 				}
 			});
+			//current_spanにスタイル付けないと駄目でした
+			let font = font_style(true);
+			$(".current_span").attr("style",font);
 		}
 	}
 
@@ -101,12 +135,8 @@
 	}
 
 
-	//[l]はjoinがいいな
-	TYRANO.kag.tag.l.log_join = "true";
-
-
 	//pushBackLog
-	TYRANO.kag.pushBackLog = function(str, type) {
+	tyrano.plugin.kag.pushBackLog = function(str, type){
 
 		//バックログを記録するか否か
 		if (this.stat.log_write == false) {
@@ -131,7 +161,7 @@
 			if(str.indexOf("backlog_text") > -1){
 				const style = TYRANO.kag.stat.memocho.log.font.style || "";
 				let name = TYRANO.kag.stat.memocho.log.font.name || "";
-				name = ' ' + name.replace(/,/g," ");
+				name = " " + name.replace(/,/g," ");
 				//str = str.replace(/(.*)<span(.*)\'>/,"$1<span" + style + "$2" + name + "'>");
 				str = str.replace(/(.*)class=(.*)\'>/,"$1" + style + "class=" + name + "$2'>");
 				//console.log("pushBackLog：",str,TYRANO.kag.stat.memocho.log.font,this.variable.tf.system.backlog);
@@ -164,8 +194,13 @@
 		}
 
 		//セーブ用のテキストファイルを保存
-		//this.stat.current_save_str = this.variable.tf["system"]["backlog"][this.variable.tf.system.backlog.length - 1];
-		this.stat.current_save_str = this.variable.tf["system"]["backlog"][index];
+		this.stat.current_save_str = this.variable.tf["system"]["backlog"][this.variable.tf.system.backlog.length - 1];
+
+		/////改造////////////////////////////////////////////////////
+		if(TYRANO.kag.tmp.memocho.log.save_text == "false"){
+			this.stat.current_save_str = $(this.variable.tf.system.backlog[index]).text(); //textのみいれる
+		}
+		/////改造////////////////////////////////////////////////////
 
 		//上限を超えたらFILO で処理
 		if (max_back_log < this.variable.tf["system"]["backlog"].length) {

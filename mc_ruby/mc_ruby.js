@@ -21,12 +21,12 @@
 			if(TYRANO.kag.tmp.custom_ruby){
 				TYRANO.kag.ftag.startTag("ruby",pm); //rubyタグ実行
 				let selecter = ($(".current_span").html()) ? $(".current_span") : $(".current_span").prev();//空だったら一個前見る
-				let ruby_html = selecter.find("ruby:last").next("span").prop('outerHTML');//ルビ用のタグを拾う
+				let ruby_html = selecter.find("ruby:last").next("span").prop("outerHTML");//ルビ用のタグを拾う
 				//ログ入れる
 				let last_log = $(TYRANO.kag.variable.tf.system.backlog.pop()); //ログの最後の配列切り取る
 				let text = last_log.last().html();
-				last_log.last().html(text.replace(/(^.)/,'$1' +ruby_html));
-				last_log = jQuery('<div>').append(last_log.clone(true)).html();
+				last_log.last().html(text.replace(/(^.)/,"$1" +ruby_html));
+				last_log = jQuery("<div>").append(last_log.clone(true)).html();
 				TYRANO.kag.variable.tf.system.backlog.push(last_log); //ログに戻す
 				//console.log("mc_ruby(custom_ruby)：",TYRANO.kag.tmp.memocho.log.ruby_str,ruby_html);
 				TYRANO.kag.tmp.memocho.log.ruby_str = ""; //念のためクリア
@@ -52,11 +52,11 @@
 				time = (!TYRANO.kag.stat.is_click_text || !TYRANO.kag.stat.is_nowait || !TYRANO.kag.stat.is_skip) ? time : 0;
 				setTimeout(function(){
 					let selecter = ($(".current_span").html()) ? $(".current_span") : $(".current_span").prev();//メッセージ空だったら一個前見る
-					selecter.children('span:last-child').wrapInner(TYRANO.kag.tmp.memocho.log.ruby_str); //ルビ付ける
+					selecter.children("span:last-child").wrapInner(TYRANO.kag.tmp.memocho.log.ruby_str); //ルビ付ける
 					let last_log = TYRANO.kag.variable.tf.system.backlog.pop(); //ログの最後の配列切り取る
 					let log = $(last_log);                                     //jQueryドキュメントに
 					log.last().wrapInner(TYRANO.kag.tmp.memocho.log.ruby_str); //ルビ付ける
-					last_log = jQuery('<div>').append(log.clone(true)).html(); //文字列に戻す
+					last_log = jQuery("<div>").append(log.clone(true)).html(); //文字列に戻す
 					//console.log("endruby：",last_log);
 					TYRANO.kag.variable.tf.system.backlog.push(last_log); //ログに戻す
 					TYRANO.kag.tmp.memocho.log.ruby_str = ""; //クリア

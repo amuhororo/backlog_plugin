@@ -1,4 +1,4 @@
-/*【自動でルビを入れるプラグイン】         */
+/*【自動でルビを入れるプラグイン】           */
 /* by hororo https://memocho.no-tenki.me/ */
 
 
@@ -8,10 +8,8 @@
 .message_inner .mc_ruby.auto[data-ruby]::after {
 }
 .message_inner .vertical_text .mc_ruby.auto {
-	writing-mode: initial;
 }
 .message_inner .vertical_text .mc_ruby.auto[data-ruby]::after {
-	writing-mode: vertical-rl;
 	left: calc(1em);
 }
 
@@ -20,7 +18,7 @@
 .chara_name_area.mc_ruby.auto {
 }
 .chara_name_area.mc_ruby.auto[data-ruby]::after {
-	bottom: calc(1em + 0.4em);
+	bottom: calc(1em + 3px);
 }
 
 /* glink調整 */
@@ -40,8 +38,8 @@ p.vertical_text > .mc_ruby.auto {
 }
 
 
-/* 多重登録非表示 */
-.log_body ruby ruby.mc_ruby[data-ruby]::after,
+/* 多重登録は非表示 */
+ruby ruby.mc_ruby[data-ruby]::after,
 .message_inner ruby + ruby.mc_ruby {
-	display:none;
+	display: none;
 }

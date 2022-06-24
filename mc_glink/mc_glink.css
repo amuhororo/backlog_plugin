@@ -2,19 +2,14 @@
 /* by hororo http://hororo.wp.xdomain.jp/118/    */
 
 
-/* 名前部分 */
-.log_body .backlog_chara_name.glink{
+/* 名前・テキスト */
+.log_body .backlog_chara_name.glink,
+.log_body .backlog_text.glink {
 	font-weight: bold;
 }
 
 /* マーク */
-.log_body .backlog_chara_name.glink::after{
+.log_body .backlog_chara_name.glink::after {
 	content: attr(data-mark);
-	margin: 0 0.5em;
-}
-
-/* テキスト */
-.log_body .backlog_text.glink{
-	position: relative;
-	font-weight: bold;
+	font-weight: normal;
 }
