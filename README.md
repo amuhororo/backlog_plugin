@@ -86,7 +86,7 @@
 | mark | × | キャラ名とテキストの間の記号を指定できます。文字コードを指定すれば絵文字なども入れられます。 | ： |
 | name_color | × | ログのキャラ名に`[chara_new]`で指定した `color` を反映するか。する場合は `true` | `false` |
 | name_none | × | ログにキャラ名を表示させない場合は `true` | `false` |
-| name_repeat | × | 同じキャラのセリフが続く場合、キャラ名を重複しないようにするか。する場合は `true` | `false` |
+| name_repeat | × | 同じキャラのセリフが続く場合、キャラ名を重複しないようにするか。する場合は `false` | `true` |
 | text_center | × | 名前やテキストを中央揃えにするか。する場合は `true` <br> ※`name_repeat` が `true` の時は無効になります。 | `false` |
 | vertical | × | ログを縦書きにするか。縦書きは `true`。 横書きは `false`。<br>※Config.tjsと逆にしたい場合に指定します。 | `Config.tjs` の `vertical` |
 | l_join | × | `[l]`で改行しないようにするか。する場合は `true` | - |
@@ -99,7 +99,7 @@
 | glink_mark | × | キャラ名相当部分とテキストの間の記号を指定できます。<br>※`log_name` を指定した場合のみ有効。 | `backlog` の `mark` or ： |
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 一括
 [plugin name=backlog storage=setup.ks mark="≫" l_join="true" log_name="選択！"]
 
@@ -127,7 +127,7 @@ backlog で追加します。
 指定できるパラメータはありません。
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 改行します。[br]ログも改行します。
 ```
 
@@ -141,7 +141,7 @@ mc_ruby で追加します。
 | text | ○ | ルビとして表示させる文字を指定します。 |  |
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 [mc_ruby text="かんじ"]漢字[endruby]
 ```
 
@@ -153,7 +153,7 @@ mc_ruby で追加します。
 指定できるパラメータはありません。
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 [mc_ruby text="かんじ"]漢字[endruby]
 ```
 
@@ -169,7 +169,7 @@ mc_font で追加します。
 他、公式の `[font]` タグと同じパラメータを指定できます。
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 [mc_font color="0xFF0000" size="40" bold=true]
 文字を太く大きく赤色にします。
 [mc_resetfont bold=""]
@@ -191,7 +191,7 @@ mc_font で追加します。
 他、公式の `[font]` タグと同じパラメータを指定できます。
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 [mc_font color="0xFF0000" size="40" bold=true]
 文字を太く大きく赤色にします。
 [mc_resetfont bold=""]
@@ -214,7 +214,7 @@ plugin で指定した値と変えたい時はパラメータを指定してく�
 他、公式の `[glink]` タグと同じパラメータを指定できます。
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 [mc_glink text="選択肢１" log_name="選択" mark="≫"] ※他パラメータは省略
 ```
 
@@ -229,7 +229,7 @@ mc_tcy で追加します。
 | text | ○ | 縦中横で表示させる文字を指定します。 |  |
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 わあああああああ[mc_tcy text="!!"]みたいな。
 ```
 
@@ -280,7 +280,7 @@ mc_tcy で追加します。
 - `[endruby]` は使いません。あっても無視されます。  
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 [mc_ruby text="かんじ" x=14 scale=0.4]漢字
 ```
 
@@ -289,7 +289,7 @@ mc_tcy で追加します。
 `<tcy>` タグで囲ってください。
 
 **サンプルコード**
-``` ks
+``` tyranoscript
 [ptext text="サンプルテキスト<tcy>!?</tcy>ですか<tcy>??</tcy>" vertical="true"]
 ※他パラメータは省略
 ```

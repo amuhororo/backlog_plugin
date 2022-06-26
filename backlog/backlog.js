@@ -11,7 +11,7 @@
 	TYRANO.kag.tmp.memocho.log.mark = TYRANO.kag.stat.mp.mark || "：";
 	TYRANO.kag.tmp.memocho.log.name_color = TYRANO.kag.stat.mp.name_color || "false";
 	TYRANO.kag.tmp.memocho.log.name_none = TYRANO.kag.stat.mp.name_none || "false";
-	TYRANO.kag.tmp.memocho.log.name_repeat = TYRANO.kag.stat.mp.name_repeat || "false";
+	TYRANO.kag.tmp.memocho.log.name_repeat = TYRANO.kag.stat.mp.name_repeat || "true";
 	TYRANO.kag.tmp.memocho.log.text_center = TYRANO.kag.stat.mp.text_center || "false";
 	TYRANO.kag.tmp.memocho.log.vertical = TYRANO.kag.stat.mp.vertical || TYRANO.kag.config.vertical;
 
@@ -145,7 +145,7 @@
 			}
 			// class追加 ////////////////////////////////////////////
 			if(log.name_none == "true") layer_menu.find(".log_body").addClass("name_none");
-			if(log.name_repeat == "true") layer_menu.find(".log_body").addClass("name_repeat");
+			if(log.name_repeat == "false") layer_menu.find(".log_body").addClass("name_repeat");
 			else if(log.text_center == "true") layer_menu.find(".log_body").addClass("center");
 			// END /////////////////////////////////////////////////
 
