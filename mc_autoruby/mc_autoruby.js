@@ -31,8 +31,10 @@
 				flag = "current_span";
 				target_layer = value.target.parentNode.parentNode.parentNode.className;
 				//target_layer = value.target.parentNode.parentNode.parentNode;
-				if(TYRANO.kag.tmp.memocho.log.ruby_str) text = ""; //ルビがある時はスルー
-				else if(value.addedNodes) text = value.addedNodes[value.addedNodes.length-1].innerText || "";
+				//if(TYRANO.kag.tmp.memocho.log.ruby_str) text = ""; //ルビがある時はスルー
+				//else if(value.addedNodes) text = value.addedNodes[value.addedNodes.length-1].innerText || "";
+				if(value.addedNodes) text = value.addedNodes[value.addedNodes.length-1].innerText || "";
+				text = text.replace(/\n.*\n/g, "");
 				text += $("." + target_layer.replace(/ /g, ".")).find(".chara_name_area").text();
 			}
 
@@ -113,7 +115,7 @@
 							const p = new RegExp(elem.key,"g");
 							let result;
 							while (result = p.exec(text)) {
-								//console.log("テキスト",key,target_layer.find('.current_span').children('span:last').children('span').eq(result.index),result);
+								//console.log("テキスト",elem.key,text,target_layer.find('.current_span').children('span:last').children('span').eq(result.index),result);
 								let taget_span = $(".current_span").children("span:last").children("span").eq(result.index);
 								//keyの1文字目確認
 								if(taget_span.text() == elem.key.slice(0,1)){
@@ -316,10 +318,11 @@
 		他: "ほか",
 		追加: "ついか",
 		対象: "たいしょう",
-		強制的: "きょうせいてき", //入る
-		強制: "きょうせい",       //前方一致は無効化できる（cssで非表示）
-		非対応: "ひたいおう",     //入る
-		対応: "たいおう",         //後方一致は無効化できない（ログには入らない）
+		強制的: "きょうせいてき",
+		強制: "きょうせい",
+		非対応: "ひたいおう",
+		対応: "たいおう",
+		非: "ひ",
 		全部: "ぜんぶ",
 		振: "ふ",
 		表示: "ひょうじ",
@@ -333,6 +336,7 @@
 		切換: "きりか",
 		需要: "じゅよう",
 		無料: "むりょう",
+		健か: "したた　　",
 		人: "ひと",
 		遊: "あそ",
 		用: "よう",
@@ -340,9 +344,8 @@
 		頂: "いただ",
 		感: "かん",
 		長: "なが",
-		非: "ひ",
 		分: "わ",
-		長い長ーーーい名前: "なが　　なが　　　　　　　　 なまえ "  //名前は分割指定できません
+		長い長ーーーい名前: "なが　　なが　　　　　　　　 なまえ "  //名前は分割指定できん
 	};
 
 	//パラメータがあれば渡す
@@ -365,7 +368,7 @@
 
 	ruby_newlist(ruby_list); //実行
 
-
+/*
 	const log_autoruby = function(key,ruby_tag) {
 		if(TYRANO.kag.variable.tf.system.backlog.length > 0){
 			let last_log = $(TYRANO.kag.variable.tf.system.backlog.pop()); //最後のログ
@@ -385,7 +388,7 @@
 			TYRANO.kag.variable.tf.system.backlog.push(last_log);
 		}
 	}
-
+*/
 
 	//ログに自動でルビを振ります。
 	//iscriptでも実行したいのでグローバル関数に（タグ化した方がいいかも？）

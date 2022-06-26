@@ -9,7 +9,6 @@
 .mc_ruby[data-ruby]::after {
 	content: attr(data-ruby);
 	position: absolute;
-	/*display: inline;*/
 	text-align: center;
 	white-space: nowrap;
 	transform: translate(0px, 0px) scale(0.5);
