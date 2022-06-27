@@ -1,5 +1,5 @@
-//【fontをバックログに入れるプラグイン】
-// Ver.1.00 2022/6/10
+//【バックログプラグイン】fontルビ機能
+// Ver.3.50 2022/6/27
 // by hororo https://memocho.no-tenki.me/
 
 (function(){
@@ -13,7 +13,7 @@
 	//パラメータ保存
 	TYRANO.kag.tmp.memocho = TYRANO.kag.tmp.memocho || {};
 	TYRANO.kag.tmp.memocho.log = TYRANO.kag.tmp.memocho.log || {};
-	TYRANO.kag.tmp.memocho.log.save_text = TYRANO.kag.stat.mp.save_text || "false";
+	TYRANO.kag.tmp.memocho.log.save_style = TYRANO.kag.stat.mp.save_style || "false";
 
 
 	//スタイル
@@ -42,21 +42,6 @@
 				TYRANO.kag.stat.memocho.log.font.style = style;
 			}
 		}
-
-/*
-		if(TYRANO.kag.stat.memocho.log.font.size){
-			style += 'font-size:' + TYRANO.kag.stat.memocho.log.font.size + 'px;';
-		}
-		if(TYRANO.kag.stat.memocho.log.font.color) style += 'color:' + TYRANO.kag.stat.memocho.log.font.color + ';';
-		if(TYRANO.kag.stat.memocho.log.font.bold) style += 'font-weight:' + TYRANO.kag.stat.memocho.log.font.bold + ';';
-		if(TYRANO.kag.stat.memocho.log.font.face) style += 'font-family:' + TYRANO.kag.stat.memocho.log.font.face + ';';
-		if(TYRANO.kag.stat.memocho.log.font.italic) style += 'font-style:' + TYRANO.kag.stat.memocho.log.font.italic + ';';
-		if(TYRANO.kag.stat.memocho.log.font.shadow ) style += 'text-shadow:' + TYRANO.kag.stat.memocho.log.font.shadow + ';';
-		if(style.length){
-			style = " style='" + style + "'";
-			TYRANO.kag.stat.memocho.log.font.style = style;
-		}
-*/
 	}
 
 
@@ -86,12 +71,10 @@
 			TYRANO.kag.ftag.startTag("font",pm);
 
 			//nameを追加
-			//let name = ""
 			if(pm.name){
 				$.setName($(".current_span"), pm.name);
 				TYRANO.kag.stat.memocho.log.font.name = " " + pm.name.replace(/,/g," ");
 			}
-			//TYRANO.kag.stat.memocho.log.font.name = name;
 		}
 	}
 
@@ -162,9 +145,7 @@
 				const style = TYRANO.kag.stat.memocho.log.font.style || "";
 				let name = TYRANO.kag.stat.memocho.log.font.name || "";
 				name = " " + name.replace(/,/g," ");
-				//str = str.replace(/(.*)<span(.*)\'>/,"$1<span" + style + "$2" + name + "'>");
 				str = str.replace(/(.*)class=(.*)\'>/,"$1" + style + "class=" + name + "$2'>");
-				//console.log("pushBackLog：",str,TYRANO.kag.stat.memocho.log.font,this.variable.tf.system.backlog);
 			}
 		}
 		//メッセージエリアへname反映
@@ -197,7 +178,7 @@
 		this.stat.current_save_str = this.variable.tf["system"]["backlog"][this.variable.tf.system.backlog.length - 1];
 
 		/////改造////////////////////////////////////////////////////
-		if(TYRANO.kag.tmp.memocho.log.save_text == "false"){
+		if(TYRANO.kag.tmp.memocho.log.save_style == "false"){
 			this.stat.current_save_str = $(this.variable.tf.system.backlog[index]).text(); //textのみいれる
 		}
 		/////改造////////////////////////////////////////////////////

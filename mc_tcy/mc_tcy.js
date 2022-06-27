@@ -1,5 +1,5 @@
-//【縦中横プラグイン】
-// Ver.1.00 2022/6/10
+//【バックログプラグイン】縦中横機能
+// Ver.3.50 2022/6/27
 // by hororo https://memocho.no-tenki.me/
 
 (function(){
@@ -23,7 +23,6 @@
 			//ログ
 			let last_log = TYRANO.kag.variable.tf.system.backlog.pop(); //ログの最後の配列切り取る
 			last_log = last_log.replace(/(.*)<\/span>/,"$1<tcy>"+ pm.text + "</tcy></span>"); //最後のタグの次にねじ込む
-			//TYRANO.kag.pushBackLog(last_log,"add"); //ログに戻す
 			TYRANO.kag.variable.tf.system.backlog.push(last_log);
 
 			//effect

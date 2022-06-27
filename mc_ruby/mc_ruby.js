@@ -1,5 +1,5 @@
-//【ルビをバックログに入れるプラグイン】
-// Ver.1.00 2022/6/
+//【バックログプラグイン】ルビログ機能
+// Ver.3.50 2022/6/27
 // by hororo https://memocho.no-tenki.me/
 
 (function(){
@@ -28,12 +28,10 @@
 				last_log.last().html(text.replace(/(^.)/,"$1" +ruby_html));
 				last_log = jQuery("<div>").append(last_log.clone(true)).html();
 				TYRANO.kag.variable.tf.system.backlog.push(last_log); //ログに戻す
-				//console.log("mc_ruby(custom_ruby)：",TYRANO.kag.tmp.memocho.log.ruby_str,ruby_html);
 				TYRANO.kag.tmp.memocho.log.ruby_str = ""; //念のためクリア
 			}else{
 				TYRANO.kag.stat.ruby_str = ""; //念のためクリア
 				TYRANO.kag.tmp.memocho.log.ruby_str = "<ruby class='mc_ruby' data-ruby='" + pm.text + "'>";
-				console.log("mc_ruby：",TYRANO.kag.tmp.memocho.log.ruby_str);
 				TYRANO.kag.ftag.nextOrder(); //次のタグへ
 			}
 		}
@@ -44,7 +42,6 @@
 		start : function(pm) {
 			//カスタムルビプラグインがある時とmc_ruby使ってない時はendrubyを無視
 			if(TYRANO.kag.tmp.custom_ruby || !TYRANO.kag.tmp.memocho.log.ruby_str){
-				//console.log("endruby：無視");
 				TYRANO.kag.ftag.nextOrder(); //次のタグへ
 			}else{
 				//あまり意味ないけどefect待ってみる
@@ -57,7 +54,6 @@
 					let log = $(last_log);                                     //jQueryドキュメントに
 					log.last().wrapInner(TYRANO.kag.tmp.memocho.log.ruby_str); //ルビ付ける
 					last_log = jQuery("<div>").append(log.clone(true)).html(); //文字列に戻す
-					//console.log("endruby：",last_log);
 					TYRANO.kag.variable.tf.system.backlog.push(last_log); //ログに戻す
 					TYRANO.kag.tmp.memocho.log.ruby_str = ""; //クリア
 					TYRANO.kag.ftag.nextOrder(); //次のタグへ

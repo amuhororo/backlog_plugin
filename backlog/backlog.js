@@ -1,5 +1,5 @@
 //【バックログプラグイン】
-// Ver.3.50 2022/6/
+// Ver.3.50 2022/6/27
 // by hororo https://memocho.no-tenki.me/
 
 (function(){

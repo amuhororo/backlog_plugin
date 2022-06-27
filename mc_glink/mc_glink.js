@@ -1,5 +1,5 @@
-//【glinkログプラグイン】
-// Ver.1.00 2022/6/
+//【バックログプラグイン】glinkログ機能
+// Ver.3.50 2022/6/27
 // by hororo https://memocho.no-tenki.me/
 
 (function(){
@@ -12,7 +12,7 @@
 	TYRANO.kag.tmp.memocho.log.glink_mark = TYRANO.kag.stat.mp.glink_mark || TYRANO.kag.stat.mp.mark || TYRANO.kag.tmp.memocho.log.mark || "：";
 
 	if(typeof window.MEMOCHO === "undefined") window.MEMOCHO = {};
-	
+
 	MEMOCHO.glink_log = function(pm){
 		let log_text = "";
 		const name = pm.log_name || TYRANO.kag.tmp.memocho.log.glink_name;

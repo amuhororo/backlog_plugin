@@ -7,8 +7,7 @@
 
 	set.forEach(function(elem){
 		$.get("./data/others/plugin/" + elem + "/init.ks",function(){
-			tf.mclog[elem] = true;
-			console.log("パック",elem);
+			tf.mclog[elem] = true; //init.ksがあったらtrue
 		});
 	});
 [endscript]
