@@ -1,9 +1,0 @@
-/*【バックログプラグイン】縦中横機能       */
-/* by hororo https://memocho.no-tenki.me/ */
-
-tcy {
-	-webkit-text-combine: horizontal;
-	-ms-text-combine-horizontal: all;
-	text-combine-upright: all;
-	display: inline-block;
-}

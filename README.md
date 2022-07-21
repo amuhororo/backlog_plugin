@@ -16,40 +16,40 @@
 | mc_tcy | 縦書き時に縦中横を使う事ができます。ログにも入ります。 |  |
 
 
-### 主な機能
+## 主な機能
 
 <details open>
 <summary>折り畳み</summary>
 
-#### backlog
+### backlog
 
-- ログをCSSで自由に整形できます。
+- ログをCSSでデザインしやすいようログのhtmlをコーティングします。
 - 同じキャラのセリフが続く場合、キャラ名が重複しないようにできます。
 - ログのhtmlタグに、`[chara_new]` で定義した `name` が `class`名として入ります。
 - `[chara_new]` で指定した `color` をログに反映するか選択可能です。
-- `[rb]` タグを追加。`[r]`の代わりに使うとログも改行します。
+- `[r]`タグでログも改行します。※しない場合は`[br]`タグを追加します。
 - `[l]`で改行しないようにするか選択可能です。
 - ログの縦書き対応。
 
-#### mc_ruby
+### mc_ruby
 
 - バックログにもルビを振ります。
 - `[mc_ruby]` ~ `[endruby]` で囲う事で、複数テキストにまとめてルビを振る事が出来ます。
 - （猫）milkcatさんの「カスタムルビプラグイン」をログ対応にできます。
 
-#### mc_font
+### mc_font
 
-- スタイルをログに反映できます。
+- `[font]`タグのスタイルをログに反映できます。
 - `[mc_font]`タグに `name` を指定できます。
 - `[mc_resetfont]` でリセットするスタイルを指定できます。
 
-#### mc_glink
+### mc_glink
 
 - `[mc_glink]` タグを使うと、選択したglinkのテキストをログに追加します。
 - キャラクター名にあたる部分のテキストを指定できます。
 - キャラクター名とテキストの間のマークを指定できます。
 
-#### mc_tcy
+### mc_tcy
 
 - `[mc_tcy]` タグでメッセージに縦中横を表示できます。ログにも入ります。
 - HTMLで`<tcy>`タグが使えます。
@@ -57,29 +57,53 @@
 </details>
 
 
-## 使い方
+## ファイル構成
 
-### 導入方法
+<details>
+<summary>折り畳み</summary>
 
-#### 一括で導入する
+```
+backlog
+├ backlog
+│ ├ init.ks
+│ ├ backlog.js
+│ └ backlog.css
+├ mc_ruby
+│ ├ init.ks
+│ ├ mc_ruby.js
+│ └ mc_ruby.css
+├ mc_font
+│ ├ init.ks
+│ └ mc_font.ks
+├ mc_glink
+│ ├ init.ks
+│ ├ mc_glink.js
+│ └ mc_glink.css
+├ mc_ruby
+│ ├ init.ks
+│ ├ mc_ruby.js
+│ └ mc_ruby.css
+└ mc_tcy
+  ├ init.ks
+  ├ mc_tcy.js
+  └ mc_tcy.css
+```
 
-1. 使用するプラグインのフォルダを全て、`「data/other/plugin/」` へ入れてください。  
- ※`backlog` は必須です。
-2. `first.ks` 等ゲーム起動時に必ず通過するシナリオファイルに `[plugin name=backlog storage=setup.ks]` を記述しプラグインを読み込みます。
-3. 必要な機能があれば、`[plugin]` タグにパラメータを指定してください。
+</details>
 
-#### 個別に導入する
+## 導入方法
 
-1. 使用するプラグインのフォルダを、`「data/other/plugin/」` へ入れてください。  
-2. `first.ks` 等ゲーム起動時に必ず通過するシナリオファイルに `[plugin name=（プラグイン名）]` を記述しプラグインを読み込みます。
-3. 必要な機能があれば、`[plugin]` タグにパラメータを指定してください。
+1. backlog フォルダを全て、`「data/other/plugin/」` へ入れてください。
+2. 使わない機能があれば、フォルダごと削除してください。 
+3. `first.ks` 等、ゲーム起動時に必ず通過するシナリオファイルに `[plugin name="backlog"]` を記述しプラグインを読み込みます。
+4. 必要があれば、`[plugin]` タグにパラメータを指定してください。
 
-#### [plugin] タグ用パラメータ
+## パラメータ
 
 <details open>
 <summary>折り畳み</summary>
 
-##### backlog
+### backlog
 
 | パラメータ名 | 必須 | 説明 | 初期値 |
 | --- | :---: | --- | --- |
@@ -90,44 +114,38 @@
 | text_center | × | 名前やテキストを中央揃えにするか。する場合は `true` <br> ※`name_repeat` が `true` の時は無効になります。 | `false` |
 | vertical | × | ログを縦書きにするか。縦書きは `true`。 横書きは `false`。<br>※Config.tjsと逆にしたい場合に指定します。 | `Config.tjs` の `vertical` |
 | l_join | × | `[l]`で改行しないようにするか。する場合は `true` | - |
+| r_log | × | `[r]`でログも改行するか。しない場合は `false`<br>※`false` の場合`[br]`タグが使えるようになります。 | - |
 
-##### mc_font
+### mc_font
 
 | パラメータ名 | 必須 | 説明 | 初期値 |
 | --- | :---: | --- | --- |
-| save_style | × | セーブのメッセージにもスタイルを反映するか。する場合は `true` | `false` |
+| save_style | × | セーブのメッセージにもスタイルを反映するか。する場合は `true`<br>※v515以降は `true` にしても反映されません。 | `false` |
 
-##### mc_glink
+### mc_glink
 
 | パラメータ名 | 必須 | 説明 | 初期値 |
 | --- | :---: | --- | --- |
 | log_name | × | ログのキャラ名相当部分のテキストを指定します。 |  |
-| glink_mark | × | キャラ名相当部分とテキストの間の記号を指定できます。<br>※`log_name` を指定した場合のみ有効。 | `backlog` の `mark` or ： |
+| glink_mark | × | キャラ名相当部分とテキストの間の記号を指定できます。<br>glinkの時はマークを変えたい時に指定します。<br>※`log_name` を指定した場合のみ有効。 | - |
 
 **サンプルコード**
 ``` tyranoscript
-一括（別機能のパラメータも backlog に書いてOK）
-[plugin name=backlog storage=setup.ks mark="≫" l_join="true" log_name="選択！"]
-
-個別
-[plugin name="backlog" mark="≫" l_join="true"]
-[plugin name="mc_glink" log_name="選択！" glink_mark="≫"]
-[plugin name="mc_ruby"]
-[plugin name="mc_font"]
-[plugin name="mc_tcy"]
+[plugin name=backlog mark="≫" l_join="true" log_name="選択！"]
 ```
 
 </details>
 
 
-### 追加タグ
+## 追加タグ
 
 <details open>
 <summary>折り畳み</summary>
 
-#### [br]
+### [br]
 
-backlog で追加します。  
+**backlog** で追加します。
+※`r_log="false"` を指定した場合のみ追加されます。
 ログにも改行を入れたい時に`[r]` タグの代わりに使います。  
 
 指定できるパラメータはありません。
@@ -137,23 +155,23 @@ backlog で追加します。
 改行します。[br]ログも改行します。
 ```
 
-#### [mc_ruby]
+### [mc_ruby]
 
-mc_ruby で追加します。  
-複数テキストにルビを振ります。  
+**mc_ruby** で追加します。  
+複数テキストにルビを振り、ログにも入れます。  
 
 | パラメータ名 | 必須 | 説明 | 初期値 |
 | --- | :---: | --- | --- |
 | text | ○ | ルビとして表示させる文字を指定します。 |  |
 
-**サンプルコード**
+サンプルコード
 ``` tyranoscript
 [mc_ruby text="かんじ"]漢字[endruby]
 ```
 
-#### [endruby]
+### [endruby]
 
-mc_ruby で追加します。  
+**mc_ruby** で追加します。  
 ルビの指定範囲を終了します。  
 
 指定できるパラメータはありません。
@@ -163,9 +181,9 @@ mc_ruby で追加します。
 [mc_ruby text="かんじ"]漢字[endruby]
 ```
 
-#### [mc_font]
+### [mc_font]
 
-mc_font で追加します。  
+**mc_font** で追加します。  
 指定したスタイルをログにも反映します。
 
 | パラメータ名 | 必須 | 説明 | 初期値 |
@@ -184,9 +202,9 @@ mc_font で追加します。
 全解除でデフォルトになりました。
 ```
 
-#### [mc_resetfont]
+### [mc_resetfont]
 
-mc_font で追加します。  
+**mc_font** で追加します。  
 指定したスタイルをリセットします。  
 ※`[resetfont]` でもメッセージのスタイルはリセットされますが、ログはリセットされないのでご注意ください。
 
@@ -206,9 +224,9 @@ mc_font で追加します。
 全解除でデフォルトになりました。
 ```
 
-#### [mc_glink]
+### [mc_glink]
 
-mc_glink で追加します。  
+**mc_glink** で追加します。  
 選択をログにも追加します。  
 plugin で指定した値と変えたい時はパラメータを指定してください。
 
@@ -224,9 +242,9 @@ plugin で指定した値と変えたい時はパラメータを指定してく�
 [mc_glink text="選択肢１" log_name="選択" mark="≫"] ※他パラメータは省略
 ```
 
-#### [mc_tcy]
+### [mc_tcy]
 
-mc_tcy で追加します。  
+**mc_tcy** で追加します。  
 メッセージテキストに縦中横を入れます。  
 フォントの種類によって対応文字数が変わります。
 
@@ -242,12 +260,12 @@ mc_tcy で追加します。
 </details>
 
 
-### ログのHTMLタグ構成
+## ログのHTMLタグ構成
 
 <details open>
 <summary>折り畳み</summary>
 
-#### 通常テキスト
+### 通常テキスト
 
 `<div>` タグのキャラ名部分は、`[chara_new]`で定義した`name` が無い場合は表示名がそのまま入ります。  
 名前が無い場合は、 `no_name` が入ります。  
@@ -261,7 +279,7 @@ mc_tcy で追加します。
 </div>
 ```
 
-#### mc_glin
+### mc_glin
 ``` html
 <b class="backlog_chara_name glink" data-mark="≫">選択！</b><span class="backlog_text glink">選択肢１</span>
 ```
@@ -278,10 +296,12 @@ mc_tcy で追加します。
 </details>
 
 
-### mc_ruby：（猫）milkcat（ねこの）さんの「カスタムルビプラグイン」との併用
+## mc_ruby：（猫）milkcat（ねこの）さんの「カスタムルビプラグイン」との併用する場合
 
-- 併用する場合は**「カスタムルビプラグイン」が優先**になります。  
-- `[mc_ruby]`タグを使う事でログにも入ります。  
+（猫）milkcat [https://milkcat.jp/](https://milkcat.jp/)
+
+- 併用する場合は **「カスタムルビプラグイン」が優先** になります。  
+- `[mc_ruby]`タグを使う事でログにもルビが入ります。  
 - 「カスタムルビプラグイン」で追加されているパラメータも使えます。  
 - `[endruby]` は使いません。あっても無視されます。  
 
@@ -291,7 +311,7 @@ mc_tcy で追加します。
 ```
 
 
-### mc_tcy：ptextなどで使う場合
+## mc_tcy を ptext などで使う場合
 `<tcy>` タグで囲ってください。
 
 **サンプルコード**
@@ -318,7 +338,9 @@ mc_tcy で追加します。
 
 ## 動作確認
 
-ティラノスクリプト v514 / v515beta3
+ティラノスクリプト v514b / v515beta5  
+
+※v515beta5 は一部非対応の機能があります。
 
 
 ## 免責
@@ -345,6 +367,7 @@ twitter ： @hororo_memocho
 ## 更新履歴
 | 更新日 | Ver | 詳細 |
 | ---- | --- | --- |
+| 2022/07/21 | ver3.51 | セーブタイトルが入らない場合がある不具合を修正。[r]タグ改造追加。導入方法変更。v514b/v515beta5にて動作確認 |
 | 2022/06/27 | ver3.50 | 設計変更。機能を分離して単独で使えるように。v514/v515にて動作確認 |
 | 2021/09/27 | ver3.11 | [nowait]瞬間表示が[endnowait]で止まらない不具合修正。TIPプラグイン4.05対応。 |
 | 2021/02/18 | ver3.10 | [nowait]瞬間表示対応テスト版。[font]タグ等がセーブタイトルにも反映されてしまう不具合を修正。 |

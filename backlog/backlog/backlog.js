@@ -1,5 +1,5 @@
 //【バックログプラグイン】
-// Ver.3.50 2022/6/27
+// Ver.3.51 2022/7/21
 // by hororo https://memocho.no-tenki.me/
 
 (function(){
@@ -11,7 +11,7 @@
 	TYRANO.kag.tmp.memocho.log.mark = TYRANO.kag.stat.mp.mark || "：";
 	TYRANO.kag.tmp.memocho.log.name_color = TYRANO.kag.stat.mp.name_color || "false";
 	TYRANO.kag.tmp.memocho.log.name_none = TYRANO.kag.stat.mp.name_none || "false";
-	TYRANO.kag.tmp.memocho.log.name_repeat = TYRANO.kag.stat.mp.name_repeat || "true";
+	TYRANO.kag.tmp.memocho.log.name_repeat = TYRANO.kag.stat.mp.name_repeat || "false";
 	TYRANO.kag.tmp.memocho.log.text_center = TYRANO.kag.stat.mp.text_center || "false";
 	TYRANO.kag.tmp.memocho.log.vertical = TYRANO.kag.stat.mp.vertical || TYRANO.kag.config.vertical;
 
@@ -19,13 +19,29 @@
 	// [l]でaddにならないように。
 	if(TYRANO.kag.stat.mp.l_join == "true") tyrano.plugin.kag.tag.l.log_join = "true";
 
+
+	//[r]
+	if(TYRANO.kag.stat.mp.r_log!="false"){
+		tyrano.plugin.kag.tag.r.start = function () {
+
+			// 追加 ////////////////////////////////////////////////
+			this.kag.pushBackLog("<br>","join");
+			// END /////////////////////////////////////////////////
+
+			//var that = this; /たぶんこれいらない
+			this.kag.getMessageInnerLayer().find("p").find(".current_span").append("<br>");
+			this.kag.ftag.nextOrder();
+		}
+	}
+
+
 	//displayLog
 	tyrano.plugin.kag.menu.displayLog = function() {
 
 		var that = this;
 		this.kag.stat.is_skip = false;
 
-		var j_save = $("<div></div>");
+		//var j_save = $("<div></div>"); //たぶんこれいらない
 
 		this.kag.html("backlog", {
 			"novel": $.novel
@@ -99,7 +115,7 @@
 							//glinkか
 							if(logHTML[i]["className"].indexOf("glink") > -1){
 								charaEName = "glink";
-								new_log = new_log.replace("<span","<p class='log_text'><span") + "</p>";
+								new_log = new_log.replace('<span','<p class="log_text"><span') + '</p>';
 							}
 							//キャラ名があるか
 							else if(classList[0] == "backlog_chara_name"){
@@ -108,44 +124,44 @@
 								 //名前の色
 								if(log.name_color == "true"){
 									charaColor = TYRANO.kag.stat.charas[charaEName].color || "";
-									charaColor = " style='color:" + $.convertColor(charaColor) + "'";
+									charaColor = ' style="color:' + $.convertColor(charaColor) + '"';
 									new_log = new_log.replace("<b","<b" + charaColor);
 								}
 								//テキストを p で囲う
-								new_log = new_log.replace("</b>：","</b><p class='log_text'>") + "</p>";
+								new_log = new_log.replace('</b>：','</b><p class="log_text">') + '</p>';
 							}
 							//メッセージか
 							else if(classList[0] == "backlog_text"){
 								charaEName = "no_name"; //名前指定無し
 								//名前用 b を追加してテキストを p で囲う
-								new_log = "<b class='backlog_chara_name'></b><div class='log_text'>" + new_log + "</div>";
+								new_log = '<b class="backlog_chara_name"></b><div class="log_text">' + new_log + '</div>';
 							}
 							//pushLog
 							else{
 								charaEName = classList.value; //class全部
-								new_log = "<span class='log_text'>" + new_log + "</span>";
+								new_log = '<span class="log_text">' + new_log + '</span>';
 							}
 							//マーク
 							if(!logHTML[i].attributes["data-mark"]){
-								new_log = new_log.replace("<b ","<b data-mark='"+ log.mark +"' "); //マーク
+								new_log = new_log.replace('<b ','<b data-mark="'+ log.mark +'" '); //マーク
 							}
 							break; //一個目のタグでやめる
 						} //end コメント無視
 					} //end for logHTML.length
 				}else{
-					new_log = "<span class='log_text'>" + new_log + "</span>";
+					new_log = '<span class="log_text">' + new_log + '</span>';
 				}
 				//マーク
 				if(charaEName) class_name += " " + charaEName;
 				if(chara_name == charaEName) class_name += " none";
 				else chara_name = charaEName;
 
-				log_str += "<div class='" + class_name + "'>" + new_log + "</div>"; //divで囲おう
+				log_str += '<div class="' + class_name + '">' + new_log + '</div>'; //divで囲おう
 
 			}
 			// class追加 ////////////////////////////////////////////
 			if(log.name_none == "true") layer_menu.find(".log_body").addClass("name_none");
-			if(log.name_repeat == "false") layer_menu.find(".log_body").addClass("name_repeat");
+			if(log.name_repeat == "true") layer_menu.find(".log_body").addClass("name_repeat");
 			else if(log.text_center == "true") layer_menu.find(".log_body").addClass("center");
 			// END /////////////////////////////////////////////////
 
