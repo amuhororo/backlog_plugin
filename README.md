@@ -279,9 +279,13 @@ plugin で指定した値と変えたい時はパラメータを指定してく�
 </div>
 ```
 
-### mc_glin
+### mc_glink
 ``` html
+log_nameあり
 <b class="backlog_chara_name glink" data-mark="≫">選択！</b><span class="backlog_text glink">選択肢１</span>
+
+log_nameなし
+<span class="backlog_text glink">選択肢１</span>
 ```
 ※backlog を使う場合
 ``` html
@@ -311,7 +315,7 @@ plugin で指定した値と変えたい時はパラメータを指定してく�
 ```
 
 
-## mc_tcy を ptext などで使う場合
+## mc_tcy：ptext などで使う場合
 `<tcy>` タグで囲ってください。
 
 **サンプルコード**
