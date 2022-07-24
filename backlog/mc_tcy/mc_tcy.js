@@ -1,5 +1,5 @@
 //【バックログプラグイン】縦中横機能
-// Ver.3.51 2022/7/21
+// Ver.3.52 2022/7/24
 // by hororo https://memocho.no-tenki.me/
 
 (function(){

@@ -1,5 +1,5 @@
 //【バックログプラグイン】
-// Ver.3.51 2022/7/21
+// Ver.3.52 2022/7/24
 // by hororo https://memocho.no-tenki.me/
 
 (function(){
@@ -122,7 +122,7 @@
 								//日本語名なら英数名に
 								charaEName = TYRANO.kag.stat.jcharas[classList[1]] || classList[1];
 								 //名前の色
-								if(log.name_color == "true"){
+								if(log.name_color == "true" && TYRANO.kag.stat.charas[charaEName]){
 									charaColor = TYRANO.kag.stat.charas[charaEName].color || "";
 									charaColor = ' style="color:' + $.convertColor(charaColor) + '"';
 									new_log = new_log.replace("<b","<b" + charaColor);
@@ -142,7 +142,7 @@
 								new_log = '<span class="log_text">' + new_log + '</span>';
 							}
 							//マーク
-							if(!logHTML[i].attributes["data-mark"]){
+							if(!logHTML[i].attributes["data-mark"] && log.mark != "none"){
 								new_log = new_log.replace('<b ','<b data-mark="'+ log.mark +'" '); //マーク
 							}
 							break; //一個目のタグでやめる
