@@ -14,7 +14,7 @@
 [endscript]
 
 ;ちょっと待たないと↑が終わらない
-[wait time="100"]
+[wait time="150"]
 
 [call storage="../others/plugin/backlog/backlog/init.ks" cond="tf.mclog.backlog"]
 [call storage="../others/plugin/backlog/mc_ruby/init.ks" cond="tf.mclog.mc_ruby"]
