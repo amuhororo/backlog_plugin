@@ -128,9 +128,9 @@
     // ひとつ前のログに連結させるべきかどうか
     // たとえば[r][font][delay]などのタグを通過したあとは連結が有効になる
 
-	  var should_join_log = this.kag.stat.log_join == "true";
+    var should_join_log = this.kag.stat.log_join == "true";
 
- 	  // バックログへの追加
+    // バックログへの追加
     if ((chara_name != "" && !should_join_log) || (chara_name != "" && this.kag.stat.f_chara_ptext == "true")) {
       // バックログにキャラ名を新しく書き出す場合
       const log_str =
@@ -148,7 +148,7 @@
       const join_type = should_join_log ? "join" : "add";
       this.kag.pushBackLog(log_str, join_type);
     }
-	  */
+    */
 
     //add判定した方が楽な気がするのです
     const LOG = this.kag.tmp.memocho.log; //長いので代入
