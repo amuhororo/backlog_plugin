@@ -1,0 +1,379 @@
+/* 【バックログプラグイン 】                  */
+/* by hororo https://memocho.no-tenki.me/   */
+
+@charset "utf-8";
+
+/*** 設定 ***/
+/* 記述方法は、「[]の語句＋CSS」で検索してください */
+:root {
+  /*ログ表示部分の横サイズ [width]*/
+  --width: 1050px;
+
+  /*ログ表示部分の縦サイズ [height]*/
+  --height: 525px;
+
+  /* ログ表示部分の上位置 [top]*/
+  --top: calc(720px - var(--height) - 50px); /*下から50px位置に配置*/
+
+  /* ログ表示部分の左位置 [left]*/
+  --left: calc((1280px - var(--width)) / 2); /*中央配置*/
+
+  /* ログ表示部分の背景色 [background-color]*/
+  --background-color: rgba(251, 250, 249, 0.5);
+
+  /*ログ表示部分の枠 [border]*/
+  --border: 1px solid #798993;
+
+  /* 文字の色 [color]*/
+  --color: #798993;
+
+  /* 行間 [line-height]*/
+  --line-height: 1.6em;
+
+  /* ログのライン [border]*/
+  --log_border: 1px solid #ccc;
+
+  /* mark=line を指定した場合の 名前とテキストの間のline [border]*/
+  --mark_border: 1px solid #ddd;
+
+  /* glinkログの文字の色 [color]*/
+  --glink_color: unset;
+
+  /* glinkログの文字の太さ [font-weight]*/
+  --glink_font-weight: bold;
+
+  /* スクロールバーの幅 [width]*/
+  --scrollbar_width: 12px;
+
+  /* スクロールバーの動く部分のborder-radius [border-radius]*/
+  --scrollbar_thumb_radius: 0;
+
+  /* スクロールバーの動く部分の色 [background]*/
+  --scrollbar_thumb_background: #0f60ea;
+
+  /* スクロールバーの動かない部分の色 [background]*/
+  --scrollbar_track_background: none;
+
+  /* ログテキストの配置 [text-align]*/
+  --text-align: left;
+
+  /*名前部分の幅 [width] ※縦書きは[height]*/
+  --name_width: 120px;
+}
+
+/** 設定ここまで **/
+
+/*** 共通 ***/
+.log_body,
+.log_body * {
+  box-sizing: border-box;
+}
+.log_body .log + br {
+  display: none;
+}
+
+/*** 全体 ***/
+.log_body {
+  position: absolute;
+  width: var(--width);
+  height: var(--height);
+  top: var(--top);
+  left: var(--left);
+  line-height: var(--line-height);
+  background-color: var(--background-color);
+  color: var(--color);
+  padding: 0 15px;
+  margin: 0;
+  overflow: auto;
+  text-align: var(--text-align);
+}
+
+/*** glink ***/
+.log_body .glink {
+  font-weight: var(--glink_font-weight);
+  color: var(--glink_color);
+}
+
+/*** log ***/
+.log_body .log {
+  border-top: var(--log_border);
+  position: relative;
+  display: flex;
+  align-items: baseline;
+}
+/* 最初のログは線なし */
+.log_body .log:first-child {
+  border-top: none;
+}
+
+/*** log inner ***/
+.log_body .log .backlog_chara_name,
+.log_body .log .log_text {
+  display: block;
+  margin: 15px 0;
+}
+.log_body .log ruby {
+  line-height: 1em;
+}
+
+/*** chara name ***/
+.log_body .log .backlog_chara_name {
+  width: var(--name_width);
+  position: relative;
+  padding-right: 0.5em;
+}
+/* 名前欄空白時のサイズ調整用*/
+.log_body .log .backlog_chara_name.no_name::before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+}
+
+/*** mark ***/
+.log_body .log .backlog_chara_name::after {
+  content: attr(data-mark);
+  position: absolute;
+  right: -0.5em;
+  top: 0;
+}
+.log_body .log .backlog_chara_name[data-mark="line"]::after {
+  display: none;
+}
+.log_body .log .backlog_chara_name[data-mark="line"] {
+  border-right: var(--mark_border);
+}
+
+/*** text ***/
+.log_body .log .log_text {
+  width: 100%;
+  margin-left: -1px;
+}
+.log_body .log .backlog_chara_name + .log_text {
+  width: 84%;
+  padding-left: 1em;
+}
+.log_body .log .backlog_chara_name[data-mark="line"] + .log_text {
+  border-left: var(--mark_border);
+  padding-left: 0.5em;
+}
+.log_body .log .log_text span {
+  visibility: visible;
+}
+
+/* center
+*************************/
+.log_body.center .log {
+  align-items: center;
+}
+.log_body.center .log .backlog_chara_name::after {
+  bottom: 0;
+  margin: auto;
+  height: var(--line-height);
+}
+
+/* name_omit
+*************************/
+.log_body.name_omit .log .backlog_chara_name {
+  height: 1em;
+}
+.log_body.name_omit .log.none {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.log_body.name_omit .log.none .backlog_chara_name,
+.log_body.name_omit .log.none .backlog_chara_name::after,
+.log_body.name_omit .log.none .log_text {
+  margin-top: 0;
+}
+.log_body.name_omit .log.none .backlog_chara_name {
+  visibility: hidden;
+  font-size: 1px;
+}
+.log_body.name_omit .log.none:first-child .backlog_chara_name {
+  visibility: visible;
+  font-size: 1px;
+}
+
+/* center + name_omit
+*************************/
+.log_body.name_omit.center .log .backlog_chara_name {
+  height: auto;
+}
+/* name_none
+*************************/
+.log_body.name_none .log .backlog_chara_name {
+  display: none;
+}
+.log_body.name_none .log .log_text {
+  width: 100%;
+}
+.log_body.name_none .log .backlog_chara_name[data-mark="line"] + .log_text {
+  border-left: none;
+}
+
+/******************************************
+	縦書き
+******************************************/
+/*** 全体 ***/
+.log_body.vertical_text {
+  padding: 10px 0;
+}
+/*** log ***/
+.log_body.vertical_text .log {
+  margin-top: 0;
+  border-right: var(--log_border);
+  border-top: none;
+}
+.log_body.vertical_text .log:first-child {
+  margin-right: 0;
+  border-right: none;
+}
+.log_body.vertical_text .log:last-child {
+  padding-left: 10px;
+}
+/*** log inner ***/
+.log_body.vertical_text .log .backlog_chara_name,
+.log_body.vertical_text .log .log_text {
+  margin: 0 15px;
+}
+/*** chara name ***/
+.log_body.vertical_text .log .backlog_chara_name {
+  width: auto;
+  height: var(--name_width);
+  padding-bottom: 0.5em;
+  padding-right: 0;
+}
+.log_body.vertical_text .log .backlog_chara_name[data-mark="line"] {
+  border-bottom: var(--mark_border);
+  border-right: none;
+}
+
+/*** mark ***/
+.log_body.vertical_text .log .backlog_chara_name::after {
+  content: attr(data-mark);
+  position: absolute;
+  bottom: -0.5em;
+  right: 0;
+  top: auto;
+}
+
+/*** text ***/
+.log_body.vertical_text .log .log_text {
+  width: auto;
+  height: 100%;
+  margin-top: -1px;
+}
+.log_body.vertical_text .log .backlog_chara_name + .log_text {
+  width: auto;
+  height: 75%;
+  padding-top: 1em;
+  padding-left: 0;
+}
+.log_body.vertical_text .log .backlog_chara_name[data-mark="line"] + .log_text {
+  border-top: var(--mark_border);
+  border-left: none;
+  padding-top: 0.5em;
+}
+
+/* name_omit
+*************************/
+.log_body.vertical_text.name_omit .log .backlog_chara_name {
+  width: 1em;
+}
+
+.log_body.vertical_text.name_omit .log.none {
+  margin-right: 0;
+  border-right: none;
+}
+.log_body.vertical_text.name_omit .log.none .backlog_chara_name,
+.log_body.vertical_text.name_omit .log.none .backlog_chara_name::after,
+.log_body.vertical_text.name_omit .log.none .log_text {
+  margin-right: 0;
+}
+.log_body.vertical_text.name_omit .log.none .backlog_chara_name {
+  visibility: hidden;
+}
+.log_body.vertical_text.name_omit .log.none:first-child .backlog_chara_name {
+  visibility: visible;
+}
+
+/* center
+*************************/
+.log_body.vertical_text.center .log .backlog_chara_name::after {
+  left: 0;
+  margin: auto;
+  height: auto;
+  width: var(--line-height);
+}
+/* center + name_omit
+*************************/
+.log_body.vertical_text.name_omit.center .log .backlog_chara_name {
+  height: var(--name_width);
+  width: auto;
+}
+
+/* name_none
+*************************/
+.log_body.vertical_text.name_none .log .backlog_chara_name + .log_text {
+  height: 100%;
+  padding-top: 0;
+  border-top: none;
+}
+
+/******************************************
+  スクロールバー
+******************************************/
+.log_body::-webkit-scrollbar {
+  width: var(--scrollbar_width);
+}
+.log_body.vertical_text::-webkit-scrollbar {
+  height: var(--scrollbar_width);
+}
+.log_body::-webkit-scrollbar-thumb {
+  border-radius: var(--scrollbar_thumb_radius);
+  background: var(--scrollbar_thumb_background);
+}
+.log_body::-webkit-scrollbar-track {
+  background: var(--scrollbar_track_background);
+}
+
+/******************************************
+  ルビ
+******************************************/
+.log_body rt {
+  display: block;
+}
+.log_body .mc_ruby[data-ruby]::after {
+  bottom: calc(1em + 4px);
+}
+.log_body.vertical_text .mc_ruby[data-ruby]::after {
+  left: calc(1em + 2px);
+  bottom: -10em;
+}
+
+/* mc_ruby用 */
+.mc_ruby {
+  position: relative;
+  line-height: 1em;
+}
+.mc_ruby[data-ruby]::after {
+  content: attr(data-ruby);
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
+  transform: translate(0px, 0px) scale(0.5);
+  transform-origin: bottom center;
+  left: -10em;
+  right: -10em;
+  bottom: calc(1em + 6px);
+}
+/* 縦書き */
+.vertical_text .mc_ruby[data-ruby]::after {
+  transform: translate(0px, 0px) scale(0.5);
+  transform-origin: center left;
+  top: -10em;
+  bottom: -10em;
+  left: calc(1em + 4px);
+  right: initial;
+}
